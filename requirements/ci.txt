@@ -28,6 +28,15 @@ chardet==4.0.0
     # via
     #   -r test.txt
     #   requests
+django==3.2.2
+    # via
+    #   -r test.txt
+    #   django-anymail
+    #   django-common-helpers
+    #   django-cron
+    #   django-extensions
+    #   easy-thumbnails
+    #   factory-djoy
 django-admin-ordering==0.14.0
     # via -r test.txt
 django-anymail[mailgun]==8.2
@@ -51,15 +60,6 @@ django-js-asset==1.2.2
     #   django-ckeditor
 django-nested-admin==3.3.3
     # via -r test.txt
-django==3.2.2
-    # via
-    #   -r test.txt
-    #   django-anymail
-    #   django-common-helpers
-    #   django-cron
-    #   django-extensions
-    #   easy-thumbnails
-    #   factory-djoy
 easy-thumbnails==2.7.1
     # via -r test.txt
 facebook-sdk==3.1.0
@@ -94,7 +94,7 @@ packaging==20.9
     # via
     #   -r test.txt
     #   pytest
-pillow==8.2.0
+pillow==8.3.2
     # via
     #   -r test.txt
     #   easy-thumbnails
@@ -120,12 +120,12 @@ pyparsing==2.4.7
     # via
     #   -r test.txt
     #   packaging
-pytest-django==4.2.0
-    # via -r test.txt
 pytest==6.2.4
     # via
     #   -r test.txt
     #   pytest-django
+pytest-django==4.2.0
+    # via -r test.txt
 python-dateutil==2.8.1
     # via
     #   -r test.txt

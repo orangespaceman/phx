@@ -10,6 +10,14 @@ certifi==2020.12.5
     # via requests
 chardet==4.0.0
     # via requests
+django==3.2.2
+    # via
+    #   -r base.in
+    #   django-anymail
+    #   django-common-helpers
+    #   django-cron
+    #   django-extensions
+    #   easy-thumbnails
 django-admin-ordering==0.14.0
     # via -r base.in
 django-anymail[mailgun]==8.2
@@ -30,21 +38,13 @@ django-js-asset==1.2.2
     #   django-ckeditor
 django-nested-admin==3.3.3
     # via -r base.in
-django==3.2.2
-    # via
-    #   -r base.in
-    #   django-anymail
-    #   django-common-helpers
-    #   django-cron
-    #   django-extensions
-    #   easy-thumbnails
 easy-thumbnails==2.7.1
     # via -r base.in
 facebook-sdk==3.1.0
     # via -r base.in
 idna==2.10
     # via requests
-pillow==8.2.0
+pillow==8.3.2
     # via easy-thumbnails
 psycopg2-binary==2.8.6
     # via -r base.in

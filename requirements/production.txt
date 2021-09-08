@@ -16,6 +16,14 @@ chardet==4.0.0
     # via
     #   -r base.txt
     #   requests
+django==3.2.2
+    # via
+    #   -r base.txt
+    #   django-anymail
+    #   django-common-helpers
+    #   django-cron
+    #   django-extensions
+    #   easy-thumbnails
 django-admin-ordering==0.14.0
     # via -r base.txt
 django-anymail[mailgun]==8.2
@@ -39,14 +47,6 @@ django-js-asset==1.2.2
     #   django-ckeditor
 django-nested-admin==3.3.3
     # via -r base.txt
-django==3.2.2
-    # via
-    #   -r base.txt
-    #   django-anymail
-    #   django-common-helpers
-    #   django-cron
-    #   django-extensions
-    #   easy-thumbnails
 easy-thumbnails==2.7.1
     # via -r base.txt
 facebook-sdk==3.1.0
@@ -57,7 +57,7 @@ idna==2.10
     # via
     #   -r base.txt
     #   requests
-pillow==8.2.0
+pillow==8.3.2
     # via
     #   -r base.txt
     #   easy-thumbnails
