@@ -22,6 +22,15 @@ chardet==4.0.0
     # via
     #   -r base.txt
     #   requests
+django==3.2.2
+    # via
+    #   -r base.txt
+    #   django-anymail
+    #   django-common-helpers
+    #   django-cron
+    #   django-extensions
+    #   easy-thumbnails
+    #   factory-djoy
 django-admin-ordering==0.14.0
     # via -r base.txt
 django-anymail[mailgun]==8.2
@@ -45,15 +54,6 @@ django-js-asset==1.2.2
     #   django-ckeditor
 django-nested-admin==3.3.3
     # via -r base.txt
-django==3.2.2
-    # via
-    #   -r base.txt
-    #   django-anymail
-    #   django-common-helpers
-    #   django-cron
-    #   django-extensions
-    #   easy-thumbnails
-    #   factory-djoy
 easy-thumbnails==2.7.1
     # via -r base.txt
 facebook-sdk==3.1.0
@@ -94,10 +94,10 @@ pyflakes==2.3.1
     # via flake8
 pyparsing==2.4.7
     # via packaging
-pytest-django==4.2.0
-    # via -r test.in
 pytest==6.2.4
     # via pytest-django
+pytest-django==4.2.0
+    # via -r test.in
 python-dateutil==2.8.1
     # via faker
 python-monkey-business==1.0.0
@@ -121,7 +121,7 @@ six==1.15.0
     #   django-nested-admin
     #   python-dateutil
     #   python-monkey-business
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via
     #   -r base.txt
     #   django
