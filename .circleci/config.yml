@@ -23,7 +23,7 @@ jobs:
       - run:
           name: pip install
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install -r requirements/ci.txt
       - save_cache:
