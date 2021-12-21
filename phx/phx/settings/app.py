@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     # third-party
     'easy_thumbnails',
     'nested_admin',
-    'django_cron',
+    'django_extensions',
     'ckeditor',
     'admin_ordering',
 
@@ -228,14 +228,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Cron
-# http://django-cron.readthedocs.io/
-
-CRON_CLASSES = [
-    'social.cron.SocialCronPost',
-    # 'social.cron.SocialCronRePost',
-]
 
 # CK Editor
 # https://github.com/django-ckeditor/django-ckeditor

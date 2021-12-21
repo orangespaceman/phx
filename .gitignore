@@ -22,6 +22,7 @@ env/
 .env.production
 
 # Uploaded assets
+media
 media/
 
 # Static assets

@@ -130,12 +130,13 @@ To post to Facebook, set up an [If This Then That account](https://ifttt.com/) t
 
 ### Cron
 
-The site uses [Django-cron](http://django-cron.readthedocs.io/) to periodically post new content to the social media accounts above.
+The site uses [Django-extensions](https://django-extensions.readthedocs.io/en/latest/jobs_scheduling.html) Job Scheduling to periodically post new content to the social media accounts above.
 
 In order to set this up, the following `crontab` should be set up on the server:
 
 ```
-* * * * * ./phx-social-cron.sh
+# https://crontab.tech/every-hour
+0 * * * * ./phx-social-cron.sh
 ```
 
 Create a file in the root: `nano ~/phx-social-cron.sh`
@@ -144,7 +145,7 @@ Create a file in the root: `nano ~/phx-social-cron.sh`
 cd phx
 source env/bin/activate
 cd phx
-python manage.py runcrons --settings=phx.settings.production >> /home/phx/crons.log
+python manage.py runjobs hourly --settings=phx.settings.production >> /home/phx/crons.log
 ```
 
 Ensure this file is executable:

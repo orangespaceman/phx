@@ -3,7 +3,6 @@ django_extensions
 django-admin-ordering
 django-anymail[mailgun]
 django-ckeditor
-django-cron
 django-environ
 django-nested-admin
 easy-thumbnails
