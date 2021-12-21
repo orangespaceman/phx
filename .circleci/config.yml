@@ -2,7 +2,7 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: circleci/python:3.8-buster-node
+      - image: circleci/python:3.7-stretch-node
     steps:
       - checkout
       - restore_cache:
@@ -33,7 +33,7 @@ jobs:
 
   lint_frontend:
     docker:
-      - image: circleci/python:3.8-buster-node
+      - image: circleci/python:3.7-stretch-node
     steps:
       - checkout
       - restore_cache:
@@ -45,7 +45,7 @@ jobs:
 
   lint_backend:
     docker:
-      - image: circleci/python:3.8-buster-node
+      - image: circleci/python:3.7-stretch-node
     steps:
       - checkout
       - restore_cache:
@@ -61,7 +61,7 @@ jobs:
             flake8
   test_backend:
     docker:
-      - image: circleci/python:3.8-buster-node
+      - image: circleci/python:3.7-stretch-node
         environment:
           PGHOST: 127.0.0.1
           PGUSER: root
