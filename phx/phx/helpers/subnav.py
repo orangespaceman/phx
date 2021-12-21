@@ -6,6 +6,14 @@ def generate_subnav(slug, page):
     pages = []
     children = page.children.all()
 
+    if not page.parent and len(children) > 0:
+        pages.append({
+            'title': page.title,
+            'linkUrl': page.slug,
+            'active': page.slug == slug,
+            'parent': True
+        })
+
     for child in children:
         pages.append({
             'title':

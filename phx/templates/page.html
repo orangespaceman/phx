@@ -6,10 +6,6 @@
     {% include 'components/global/PageTitle/PageTitle.html' with data=page_title %}
   {% endif %}
 
-  {% if breadcrumb %}
-    {% include 'components/global/Breadcrumb/Breadcrumb.html' with data=breadcrumb %}
-  {% endif %}
-
   <section class="Content u-component">
     <div class="Content-subnav">
 
@@ -19,6 +15,12 @@
 
     </div>
     <div class="Content-main">
+
+      {% comment %}
+      {% if breadcrumb %}
+        {% include 'components/global/Breadcrumb/Breadcrumb.html' with data=breadcrumb %}
+      {% endif %}
+      {% endcomment %}
 
       {% block content %}
       {% endblock %}

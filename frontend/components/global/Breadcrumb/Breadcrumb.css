@@ -8,10 +8,24 @@
   /* border-bottom: 1px solid var(--colour-blue-light); */
 }
 
+@media (--large) {
+  .Breadcrumb {
+    padding-left: 0 !important;
+
+    /* padding-left: calc(240px + var(--gutter-double)); */
+  }
+}
+
 .Breadcrumb-list {
   list-style: none;
   margin: 0 0 0 var(--negative-gutter);
   padding: var(--gutter-half) 0;
+}
+
+@media (--large) {
+  .Breadcrumb-list {
+    padding-top: 0;
+  }
 }
 
 .Breadcrumb-item {

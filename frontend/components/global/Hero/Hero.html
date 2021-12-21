@@ -1,8 +1,10 @@
 {% load thumbnail %}
 
 <div class="Hero js-Hero">
-  <div class="Hero-content u-component">
-    <h1 class="Hero-title">{{title}}_</h1>
+  <div class="Hero-content">
+    <div class="Hero-titleWrap u-component">
+      <h1 class="Hero-title">{{title}}_</h1>
+    </div>
   </div>
   <div class="Hero-items">
     {% for hero in heroes %}

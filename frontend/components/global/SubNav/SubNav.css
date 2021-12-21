@@ -13,17 +13,25 @@
 }
 
 .SubNav-link {
-  background: var(--colour-blue-mid);
+  background: var(--colour-blue-light);
   color: var(--colour-blue-dark);
   display: block;
   margin-bottom: 4px;
-  padding: var(--gutter-half) var(--gutter);
+  padding: var(--gutter-half) var(--gutter) var(--gutter-half)
+    var(--gutter-double);
   text-decoration: none;
   text-transform: uppercase;
 }
 
 .SubNav-link:hover {
   opacity: var(--opacity-hover);
+}
+
+.SubNav-link--parent {
+  background: var(--colour-blue-mid);
+  font-family: var(--font-headings);
+  font-weight: bold;
+  padding-left: var(--gutter);
 }
 
 .SubNav-link--active {
@@ -44,13 +52,13 @@
 }
 
 .SubNav-sublink {
-  background: var(--colour-blue-light);
+  background: var(--colour-blue-xlight);
   color: var(--colour-blue-dark);
   display: block;
   font-size: 14px;
   margin-bottom: 4px;
   padding: var(--gutter-half) var(--gutter) var(--gutter-half)
-    var(--gutter-double);
+    var(--gutter-triple);
   text-decoration: none;
   text-transform: uppercase;
 }

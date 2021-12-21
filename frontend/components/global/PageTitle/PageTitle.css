@@ -18,6 +18,8 @@
 
 @media (--large) {
   .PageTitle-title {
-    padding: var(--gutter-double) 0;
+    padding-bottom: var(--gutter-double);
+    padding-left: calc(240px + var(--gutter-double));
+    padding-top: var(--gutter-double);
   }
 }

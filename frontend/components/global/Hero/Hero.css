@@ -31,11 +31,19 @@
 /* Hero content - title container */
 
 .Hero-content {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.Hero-titleWrap {
+  height: 100%;
   position: relative;
   z-index: 3;
 }
 
 .Hero-title {
+  bottom: 0;
   color: var(--colour-white);
   font-size: var(--font-size-h2);
   font-style: italic;
@@ -44,7 +52,6 @@
   padding: var(--gutter) 0;
   position: absolute;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 1);
-  top: 0;
 }
 
 @media (--large) {

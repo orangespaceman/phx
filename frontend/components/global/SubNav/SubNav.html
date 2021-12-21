@@ -3,7 +3,7 @@
 
     {% for item in data %}
     <li class="SubNav-item">
-      <a class="SubNav-link {% if item.active %}SubNav-link--active{% endif %}" href="{{item.linkUrl}}">
+      <a class="SubNav-link {% if item.parent %}SubNav-link--parent{% endif %} {% if item.active %}SubNav-link--active{% endif %}" href="{{item.linkUrl}}">
         {{item.title}}
       </a>
       {% if item.children %}
