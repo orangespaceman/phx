@@ -2,22 +2,22 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7-stretch-node
+      - image: circleci/python:3.8-buster-node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-npm-{{ checksum "package.json" }}
+            - dependency-cache-npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
             - dependency-cache-npm-
       - restore_cache:
           keys:
-            - dependency-cache-pip-{{ checksum "requirements/ci.txt" }}
+            - dependency-cache-pip-{{ .Environment.CACHE_VERSION }}-{{ checksum "requirements/ci.txt" }}
             - dependency-cache-pip-
       - run:
           name: NPM install
           command: npm install
       - save_cache:
-          key: dependency-cache-npm-{{ checksum "package.json" }}
+          key: dependency-cache-npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
           paths:
             - node_modules
       - run:
@@ -27,30 +27,30 @@ jobs:
             . venv/bin/activate
             pip install -r requirements/ci.txt
       - save_cache:
-          key: dependency-cache-pip-{{ checksum "requirements/ci.txt" }}
+          key: dependency-cache-pip-{{ .Environment.CACHE_VERSION }}-{{ checksum "requirements/ci.txt" }}
           paths:
             - ./venv
 
   lint_frontend:
     docker:
-      - image: circleci/python:3.7-stretch-node
+      - image: circleci/python:3.8-buster-node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-npm-{{ checksum "package.json" }}
+            - dependency-cache-npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
       - run:
           name: Lint (Frontend)
           command: npm run lint
 
   lint_backend:
     docker:
-      - image: circleci/python:3.7-stretch-node
+      - image: circleci/python:3.8-buster-node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-pip-{{ checksum "requirements/ci.txt" }}
+            - dependency-cache-pip-{{ .Environment.CACHE_VERSION }}-{{ checksum "requirements/ci.txt" }}
       - run:
           name: Lint (Backend)
           command: |
@@ -61,7 +61,7 @@ jobs:
             flake8
   test_backend:
     docker:
-      - image: circleci/python:3.7-stretch-node
+      - image: circleci/python:3.8-buster-node
         environment:
           PGHOST: 127.0.0.1
           PGUSER: root
@@ -75,10 +75,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-npm-{{ checksum "package.json" }}
+            - dependency-cache-npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
       - restore_cache:
           keys:
-            - dependency-cache-pip-{{ checksum "requirements/ci.txt" }}
+            - dependency-cache-pip-{{ .Environment.CACHE_VERSION }}-{{ checksum "requirements/ci.txt" }}
       - run:
           name: build frontend
           command: npm run build
