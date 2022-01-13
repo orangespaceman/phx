@@ -42,7 +42,7 @@ idna==3.3
     # via requests
 lxml==4.7.1
     # via svglib
-pillow==8.4.0
+pillow==9.0.0
     # via
     #   easy-thumbnails
     #   reportlab

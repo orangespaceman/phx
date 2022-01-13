@@ -57,7 +57,7 @@ lxml==4.7.1
     # via
     #   -r base.txt
     #   svglib
-pillow==8.4.0
+pillow==9.0.0
     # via
     #   -r base.txt
     #   easy-thumbnails
