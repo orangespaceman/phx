@@ -8,12 +8,12 @@ asgiref==3.4.1
     # via
     #   -r base.txt
     #   django
-aspy.refactor-imports==2.2.0
+aspy-refactor-imports==2.2.0
     # via seed-isort-config
 attrs==21.2.0
     # via pytest
 cached-property==1.5.2
-    # via aspy.refactor-imports
+    # via aspy-refactor-imports
 certifi==2021.10.8
     # via
     #   -r base.txt
@@ -78,7 +78,7 @@ mccabe==0.6.1
     # via flake8
 packaging==21.3
     # via pytest
-pillow==8.4.0
+pillow==9.0.1
     # via
     #   -r base.txt
     #   easy-thumbnails
