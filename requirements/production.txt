@@ -20,7 +20,7 @@ cssselect2==0.4.1
     # via
     #   -r base.txt
     #   svglib
-django==3.2.10
+django==3.2.14
     # via
     #   -r base.txt
     #   django-anymail
