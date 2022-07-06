@@ -40,7 +40,7 @@ facebook-sdk==3.1.0
     # via -r base.in
 idna==3.3
     # via requests
-lxml==4.7.1
+lxml==4.9.1
     # via svglib
 pillow==8.4.0
     # via

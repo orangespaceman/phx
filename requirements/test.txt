@@ -8,12 +8,12 @@ asgiref==3.4.1
     # via
     #   -r base.txt
     #   django
-aspy.refactor-imports==2.2.0
+aspy-refactor-imports==2.2.0
     # via seed-isort-config
 attrs==21.2.0
     # via pytest
 cached-property==1.5.2
-    # via aspy.refactor-imports
+    # via aspy-refactor-imports
 certifi==2021.10.8
     # via
     #   -r base.txt
@@ -70,7 +70,7 @@ iniconfig==1.1.1
     # via pytest
 isort==5.10.1
     # via -r test.in
-lxml==4.7.1
+lxml==4.9.1
     # via
     #   -r base.txt
     #   svglib
