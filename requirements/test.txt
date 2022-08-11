@@ -8,12 +8,12 @@ asgiref==3.4.1
     # via
     #   -r base.txt
     #   django
-aspy.refactor-imports==2.2.0
+aspy-refactor-imports==2.2.0
     # via seed-isort-config
 attrs==21.2.0
     # via pytest
 cached-property==1.5.2
-    # via aspy.refactor-imports
+    # via aspy-refactor-imports
 certifi==2021.10.8
     # via
     #   -r base.txt
@@ -26,7 +26,7 @@ cssselect2==0.4.1
     # via
     #   -r base.txt
     #   svglib
-django==3.2.10
+django==3.2.15
     # via
     #   -r base.txt
     #   django-anymail
