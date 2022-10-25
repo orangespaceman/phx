@@ -73,9 +73,11 @@
   padding: var(--gutter-double);
 }
 
-.Feature--imageLeft .Feature-content,
-.Feature--imageRight .Feature-content {
-  max-width: 50%;
+@media (--large) {
+  .Feature--imageLeft .Feature-content,
+  .Feature--imageRight .Feature-content {
+    max-width: 50%;
+  }
 }
 
 .Feature-title {

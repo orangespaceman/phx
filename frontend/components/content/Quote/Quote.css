@@ -73,9 +73,11 @@
   padding: var(--gutter-double);
 }
 
-.Quote--imageLeft .Quote-content,
-.Quote--imageRight .Quote-content {
-  max-width: 50%;
+@media (--large) {
+  .Quote--imageLeft .Quote-content,
+  .Quote--imageRight .Quote-content {
+    max-width: 50%;
+  }
 }
 
 .Quote-text {
