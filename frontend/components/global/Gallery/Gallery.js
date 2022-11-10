@@ -92,4 +92,4 @@ var Gallery = {
   },
 };
 
-module.exports = Gallery;
+export default Gallery;

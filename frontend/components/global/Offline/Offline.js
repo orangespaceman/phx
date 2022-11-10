@@ -8,4 +8,4 @@ var Offline = {
   },
 };
 
-module.exports = Offline;
+export default Offline;

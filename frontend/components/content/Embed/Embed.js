@@ -1,4 +1,4 @@
-var iframeResizer = require("iframe-resizer");
+import iframeResizer from "iframe-resizer";
 
 var Embed = {
   els: {
@@ -22,4 +22,4 @@ var Embed = {
   },
 };
 
-module.exports = Embed;
+export default Embed;

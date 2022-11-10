@@ -33,4 +33,4 @@ var TableOptions = {
   },
 };
 
-module.exports = TableOptions;
+export default TableOptions;

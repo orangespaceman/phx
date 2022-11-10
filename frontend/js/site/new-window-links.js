@@ -10,4 +10,4 @@ var NewWindowLinks = {
   },
 };
 
-module.exports = NewWindowLinks;
+export default NewWindowLinks;

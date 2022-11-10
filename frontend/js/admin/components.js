@@ -94,4 +94,4 @@ var Components = {
   },
 };
 
-module.exports = Components;
+export default Components;

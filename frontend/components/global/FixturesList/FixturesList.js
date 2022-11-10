@@ -87,6 +87,6 @@ function onFilterUpdate() {
   });
 }
 
-module.exports = {
+export default {
   init: init,
 };
