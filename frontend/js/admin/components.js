@@ -1,18 +1,18 @@
 var $ = window.django.jQuery;
 
 var Components = {
-  init: function() {
+  init: function () {
     Components.showInitialComponents();
     $(document).on("formset:added", Components.onAddComponent);
   },
 
   // when the page loads, if there are existing components,
   // hide their empty options (show only the prefilled form)
-  showInitialComponents: function() {
+  showInitialComponents: function () {
     var $rows = $(
       ".djn-group-root > .djn-fieldset > .djn-items > .djn-inline-form"
     );
-    $rows.each(function(counter, row) {
+    $rows.each(function (counter, row) {
       var $row = $(row);
 
       // if all component types are empty, don't hide any options
@@ -23,7 +23,7 @@ var Components = {
       // or it may have form errors.
       // either way, display it and hide the rest
       var $emptyComponents = $row.find(".djn-inline-form.djn-empty-form");
-      $emptyComponents.each(function(subCounter, emptyComponent) {
+      $emptyComponents.each(function (subCounter, emptyComponent) {
         var $emptyComponent = $(emptyComponent);
         var $fieldset = $emptyComponent.closest(".djn-group-nested");
 
@@ -48,17 +48,13 @@ var Components = {
   // we want to filter only clicks on xxxxx components.
   //
   // when triggered, hide other component fieldsets - show only this one
-  onAddComponent: function(event, $row, formsetName) {
+  onAddComponent: function (event, $row, formsetName) {
     if (formsetName === "components") return;
 
     var $fieldset = $row.parent().closest(".djn-group-nested");
     var $childFieldsets = $fieldset.find(".djn-group-nested");
     var $form = $row.parent().closest(".djn-inline-form");
-    $form
-      .find(".djn-group-nested")
-      .not($fieldset)
-      .not($childFieldsets)
-      .hide();
+    $form.find(".djn-group-nested").not($fieldset).not($childFieldsets).hide();
 
     // if this is an editorial/table component, we also need to init ckeditor
     if (
@@ -74,7 +70,7 @@ var Components = {
   //
   // taken from:
   // https://github.com/django-ckeditor/django-ckeditor/blob/master/ckeditor/static/ckeditor/ckeditor-init.js
-  initCKEditor: function() {
+  initCKEditor: function () {
     var textareas = Array.prototype.slice.call(
       document.querySelectorAll("textarea[data-type=ckeditortype]")
     );
@@ -95,7 +91,7 @@ var Components = {
         );
       }
     }
-  }
+  },
 };
 
 module.exports = Components;

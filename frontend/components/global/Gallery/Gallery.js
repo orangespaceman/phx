@@ -3,13 +3,13 @@ var Gallery = {
     container: ".js-Gallery",
     items: ".js-Gallery-item",
     back: ".js-Gallery-control--back",
-    forward: ".js-Gallery-control--forward"
+    forward: ".js-Gallery-control--forward",
   },
   transitionTime: 3000,
   timeout: null,
   isLoaded: false,
 
-  init: function() {
+  init: function () {
     this.current = 0;
 
     this.container = document.querySelector(this.els.container);
@@ -44,7 +44,7 @@ var Gallery = {
       this.forward.addEventListener("click", this.transitionForward.bind(this));
     }
   },
-  imageLoaded: function() {
+  imageLoaded: function () {
     this.isLoaded = true;
     this.queueTransition();
     this.container.addEventListener(
@@ -56,26 +56,26 @@ var Gallery = {
       this.queueTransition.bind(this)
     );
   },
-  queueTransition: function() {
+  queueTransition: function () {
     this.clearTransition();
     this.timeout = setTimeout(this.transition.bind(this), this.transitionTime);
   },
-  clearTransition: function() {
+  clearTransition: function () {
     clearTimeout(this.timeout);
   },
-  transitionBack: function() {
+  transitionBack: function () {
     this.back.blur();
     if (!this.isLoaded) return;
     this.clearTransition();
     this.transition("back");
   },
-  transitionForward: function() {
+  transitionForward: function () {
     this.forward.blur();
     if (!this.isLoaded) return;
     this.clearTransition();
     this.transition("forward");
   },
-  transition: function(direction) {
+  transition: function (direction) {
     for (var i = 0; i < this.items.length; i++) {
       this.items[i].style.opacity = 0;
     }
@@ -89,7 +89,7 @@ var Gallery = {
     this.items[this.current].style.opacity = 1;
 
     this.queueTransition();
-  }
+  },
 };
 
 module.exports = Gallery;
