@@ -88,7 +88,9 @@ class ComponentAdmin(nested_admin.NestedStackedInline):
         QuoteAdmin,
         TableAdmin,
     ]
-    sortable_field_name = 'order'
+    # disable drag/drop sorting, in order for the ordering value to work
+    # when using the following var, the order set in the admin is ignored
+    # sortable_field_name = 'order'
 
 
 class ThumbnailAdmin(nested_admin.NestedStackedInline):
