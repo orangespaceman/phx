@@ -29,3 +29,23 @@ Once you have cloned this repo, run through the following steps:
   npm run watch
   ```
 
+## Updating dependencies
+
+To check outdated dependencies, run:
+
+```
+npm outdated
+```
+
+or
+
+```
+npx npm-check-updates
+```
+
+To update dependencies, run:
+
+```
+npx npm-check-updates -u
+npm install
+```

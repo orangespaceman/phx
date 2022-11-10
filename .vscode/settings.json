@@ -19,7 +19,7 @@
 
   // ESlint - custom config
   "eslint.options": {
-    "configFile": "eslint.config.js"
+    "configFile": "eslint.config.cjs"
   },
 
   // Python - custom config
