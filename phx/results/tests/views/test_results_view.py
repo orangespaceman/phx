@@ -68,16 +68,16 @@ class TestResultsView(TestCase):
             event_date__lte=timezone.now()).distinct()
 
         first_past_fixture = past_fixtures.first()
-        last_past_fixture = past_fixtures.last()
+        latest_past_fixture = past_fixtures.last()
 
-        first_result = ResultFactory(fixture=first_past_fixture)
-        ResultFactory(fixture=last_past_fixture)
+        ResultFactory(fixture=first_past_fixture)
+        latest_result = ResultFactory(fixture=latest_past_fixture)
 
         response = self.client.get(url)
         self.assertEqual(len(response.context['results']), 2)
 
         result = response.context['results'].first()
-        self.assertEqual(result, first_result)
+        self.assertEqual(result, latest_result)
         self.assertLessEqual(result.fixture.event_date, today)
 
     def test_result_search(self):
