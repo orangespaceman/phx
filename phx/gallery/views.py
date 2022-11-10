@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from django.db.models import Q
@@ -5,6 +6,8 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Gallery, Image
+
+logger = logging.getLogger(__name__)
 
 
 class GalleryListView(generic.ListView):
@@ -59,8 +62,13 @@ class GalleryListView(generic.ListView):
             'pageSize',
             self.paginate_by,
         )
-        if int(requested_page_size) in pagination_options:
-            self.paginate_by = int(requested_page_size)
+        try:
+            paginate_by = int(requested_page_size)
+        except Exception as e:
+            logger.warning(
+                "Results pagination int value issue: '{}'".format(e))
+        if 'paginate_by' in locals() and paginate_by in pagination_options:
+            self.paginate_by = paginate_by
         return self.paginate_by
 
 
