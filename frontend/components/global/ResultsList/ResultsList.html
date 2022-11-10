@@ -51,19 +51,13 @@
       {% for result in results %}
         <li class="ResultsList-item" id="result-{{result.id}}">
           <p class="ResultsList-categories">
-            {{result.fixture.categories.all|join:', '}}
+            {{result.categories.all|join:', '}}
           </p>
           <h3 class="ResultsList-title">
-            {{result.fixture.title|highlight:search|safe}}
+            {{result.title|highlight:search|safe}}
           </h3>
           <p class="ResultsList-subtitle">
-            <span class="ResultsList-date">{{result.fixture.event_date|date:'D j M Y'}}</span>
-            {% if result.fixture.age_group %}
-              - <span class="ResultsList-age_group">{{result.fixture.age_group|highlight:search|safe}}</span>
-            {% endif %}
-            {% if result.fixture.location %}
-              (<span class="ResultsList-location">{{result.fixture.location|highlight:search|safe}}</span>)
-            {% endif %}
+            <span class="ResultsList-date">{{result..event_date|date:'D j M Y'}}</span>
           </p>
           <div class="ResultsList-summary">
             <div class="Editorial">
@@ -74,9 +68,9 @@
             {{result.results|highlight:search|safe}}
           </p>
           <ul class="ResultsList-NewsList">
-            {% if result.fixture.link_url %}
+            {% if result.event_url %}
               <li class="ResultsList-linkItem">
-                <a class="ResultsList-link" href="{{result.fixture.link_url}}">Event link</a>
+                <a class="ResultsList-link" href="{{result.event_url}}">Event link</a>
               </li>
             {% endif %}
             {% if result.results_url %}

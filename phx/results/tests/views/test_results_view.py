@@ -4,10 +4,10 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.timezone import make_aware
-from fixtures.models import Fixture
-from fixtures.tests.factories import CategoryFactory, FixtureFactory
+from fixtures.tests.factories import CategoryFactory
 from pages.models import Page
 
+from ...models import Result
 from ..factories import ResultFactory
 
 
@@ -40,8 +40,7 @@ class TestResultsView(TestCase):
         url = reverse('results-index')
         Page.objects.create(title='results')
 
-        first_fixture = FixtureFactory(title='First Fixture')
-        first_result = ResultFactory(fixture=first_fixture)
+        first_result = ResultFactory(title='First result')
 
         response = self.client.get(url)
         self.assertEqual(len(response.context['results']), 1)
@@ -56,29 +55,24 @@ class TestResultsView(TestCase):
         url = reverse('results-index')
         Page.objects.create(title='results')
 
-        # five fixtures in the future, five in the past
+        # five results in the future, five in the past
         today = datetime.now().date()
         past = today - timedelta(days=7)
         future = today - timedelta(days=-7)
-        FixtureFactory.create_batch(5, event_date=past)
-        FixtureFactory.create_batch(5, event_date=future)
+        ResultFactory.create_batch(5, event_date=past)
+        ResultFactory.create_batch(5, event_date=future)
 
-        # add results for two past fixtures
-        past_fixtures = Fixture.objects.filter(
+        past_results = Result.objects.filter(
             event_date__lte=timezone.now()).distinct()
 
-        first_past_fixture = past_fixtures.first()
-        latest_past_fixture = past_fixtures.last()
-
-        ResultFactory(fixture=first_past_fixture)
-        latest_result = ResultFactory(fixture=latest_past_fixture)
+        latest_past_result = past_results.last()
 
         response = self.client.get(url)
-        self.assertEqual(len(response.context['results']), 2)
+        self.assertEqual(len(response.context['results']), 5)
 
         result = response.context['results'].first()
-        self.assertEqual(result, latest_result)
-        self.assertLessEqual(result.fixture.event_date, today)
+        self.assertEqual(result, latest_past_result)
+        self.assertLessEqual(result.event_date, today)
 
     def test_result_search(self):
         """
@@ -87,13 +81,10 @@ class TestResultsView(TestCase):
         Page.objects.create(title='results')
         url = reverse('results-index')
 
-        first_fixture = FixtureFactory(title='First Fixture')
-        first_result = ResultFactory(fixture=first_fixture)
+        first_result = ResultFactory(title='First result')
+        ResultFactory(title='Second result')
 
-        second_fixture = FixtureFactory(title='Second Fixture')
-        ResultFactory(fixture=second_fixture)
-
-        response = self.client.get(url, {'search': 'first fixture'})
+        response = self.client.get(url, {'search': 'first result'})
         self.assertEqual(len(response.context['results']), 1)
 
         result = response.context['results'].first()
@@ -106,13 +97,10 @@ class TestResultsView(TestCase):
         Page.objects.create(title='results')
         url = reverse('results-index')
 
-        first_fixture = FixtureFactory(title='First Fixture')
-        ResultFactory(fixture=first_fixture)
+        ResultFactory(title='First result')
+        ResultFactory(title='Second result')
 
-        second_fixture = FixtureFactory(title='Second Fixture')
-        ResultFactory(fixture=second_fixture)
-
-        response = self.client.get(url, {'search': 'third fixture'})
+        response = self.client.get(url, {'search': 'third result'})
         self.assertEqual(len(response.context['results']), 0)
 
     def test_result_category_search(self):
@@ -125,13 +113,10 @@ class TestResultsView(TestCase):
         first_category = CategoryFactory(title='Cat 1')
         second_category = CategoryFactory(title='Cat 2')
 
-        first_fixture = FixtureFactory(
-            title='First Fixture',
-            categories=[first_category, second_category])
-        first_result = ResultFactory(fixture=first_fixture)
+        first_result = ResultFactory(
+            title='First Result', categories=[first_category, second_category])
 
-        second_fixture = FixtureFactory(title='Second Fixture')
-        ResultFactory(fixture=second_fixture)
+        ResultFactory(title='Second result')
 
         response = self.client.get(url, {'search': 'cat 2'})
         self.assertEqual(len(response.context['results']), 1)
@@ -149,12 +134,8 @@ class TestResultsView(TestCase):
         first_category = CategoryFactory(title='Cat 1')
         CategoryFactory(title='Cat 2')
 
-        first_fixture = FixtureFactory(title='First Fixture',
-                                       categories=[first_category])
-        ResultFactory(fixture=first_fixture)
-
-        second_fixture = FixtureFactory(title='Second Fixture')
-        ResultFactory(fixture=second_fixture)
+        ResultFactory(title='First result', categories=[first_category])
+        ResultFactory(title='Second result')
 
         response = self.client.get(url, {'search': 'cat 3'})
         self.assertEqual(len(response.context['results']), 0)
@@ -168,11 +149,9 @@ class TestResultsView(TestCase):
         date_2018 = make_aware(datetime(2018, 1, 1))
         date_2016 = make_aware(datetime(2016, 1, 1))
 
-        first_fixture = FixtureFactory(event_date=date_2018)
-        first_result = ResultFactory(fixture=first_fixture)
+        first_result = ResultFactory(event_date=date_2018)
 
-        second_fixture = FixtureFactory(event_date=date_2016)
-        second_result = ResultFactory(fixture=second_fixture)
+        second_result = ResultFactory(event_date=date_2016)
 
         url = reverse('results-index')
         response = self.client.get(url)
@@ -196,9 +175,7 @@ class TestResultsView(TestCase):
         """
         Page.objects.create(title='results')
 
-        fixtures = FixtureFactory.create_batch(100)
-        for fixture in fixtures:
-            ResultFactory(fixture=fixture)
+        ResultFactory.create_batch(100)
 
         url = reverse('results-index')
         response = self.client.get(url)

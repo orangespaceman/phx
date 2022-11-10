@@ -80,9 +80,8 @@ class HomeView(generic.TemplateView):
             '-created_date')[:3]
 
     def get_results(self):
-        return Result.objects.select_related('fixture').filter(
-            fixture__event_date__lte=timezone.now()).order_by(
-                '-fixture__event_date')[:5]
+        return Result.objects.filter(
+            event_date__lte=timezone.now()).order_by('-event_date')[:5]
 
     def get_title(self):
         return self.content.title
