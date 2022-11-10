@@ -11,6 +11,7 @@ TEST_SITE_ROOT = os.path.join(settings.SITE_ROOT, 'components/tests')
 
 # @pytest.mark.current
 class TestComponentListView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

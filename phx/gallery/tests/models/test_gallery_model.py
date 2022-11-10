@@ -5,6 +5,7 @@ from ..factories import GalleryFactory
 
 
 class TestGalleryModel(TestCase):
+
     def test_get_absolute_url(self):
         """
         Get the URL for the Gallery instance - the sluggified title

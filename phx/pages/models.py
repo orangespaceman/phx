@@ -128,6 +128,7 @@ class Embed(AbstractEmbed):
 
 
 class Feature(AbstractFeature):
+
     def get_upload_path(self, filename):
         id = self.component.page_id
         return 'page/{0}/feature/{1}'.format(id, filename)
@@ -141,6 +142,7 @@ class Feature(AbstractFeature):
 
 
 class Image(AbstractImage):
+
     def get_upload_path(self, filename):
         id = self.component.page_id
         return 'page/{0}/image/{1}'.format(id, filename)
@@ -162,6 +164,7 @@ class ListItems(AbstractListItems):
 
 
 class ListItem(AbstractListItem):
+
     def get_upload_path(self, filename):
         id = self.list_items.component.page_id
         return 'page/{0}/list-items/{1}'.format(id, filename)
@@ -188,6 +191,7 @@ class Profile(AbstractProfile):
 
 
 class ProfileMember(AbstractProfileMember):
+
     def get_upload_path(self, filename):
         id = self.profile.component.page_id
         return 'page/{0}/profile/{1}'.format(id, filename)
@@ -207,6 +211,7 @@ class ProfileMember(AbstractProfileMember):
 
 
 class Quote(AbstractQuote):
+
     def get_upload_path(self, filename):
         id = self.component.page_id
         return 'page/{0}/quote/{1}'.format(id, filename)

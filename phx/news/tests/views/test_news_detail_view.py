@@ -19,6 +19,7 @@ from ..factories import (
 
 
 class TestNewsDetailsView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

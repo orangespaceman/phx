@@ -47,6 +47,7 @@ class ComponentsListView(TemplateView):
 
 
 class ComponentsDetailView(TemplateView):
+
     def get_template_names(self):
         return 'components/{group}/{component}/demo/demo.html'.format(
             **self.kwargs)

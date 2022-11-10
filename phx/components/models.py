@@ -109,6 +109,7 @@ class AbstractImage(AbstractComponent):
 
 
 class AbstractListItems(AbstractComponent):
+
     class Meta:
         abstract = True
         verbose_name = 'list items'

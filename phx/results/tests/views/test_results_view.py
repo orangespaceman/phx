@@ -12,6 +12,7 @@ from ..factories import ResultFactory
 
 
 class TestResultsView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

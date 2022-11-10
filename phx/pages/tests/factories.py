@@ -75,6 +75,7 @@ class ImageFactory(CleanModelFactory):
 
 
 class ListItemsFactory(CleanModelFactory):
+
     class Meta:
         model = ListItems
 

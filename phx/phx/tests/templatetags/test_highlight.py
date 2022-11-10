@@ -4,6 +4,7 @@ from ...templatetags.highlight import highlight
 
 
 class TestTemplateTagsHighlight(TestCase):
+
     def test_highlight_no_params(self):
         """
         No search, return original string

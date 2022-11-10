@@ -4,6 +4,7 @@ from ...helpers.file import file_size_string
 
 
 class TestHelperFile(TestCase):
+
     def test_file_size_string_kb(self):
         """
         Return kb string

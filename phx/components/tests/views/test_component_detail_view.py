@@ -16,6 +16,7 @@ TEST_TEMPLATES = [
 
 @override_settings(SITE_ROOT=TEST_SITE_ROOT, TEMPLATES=TEST_TEMPLATES)
 class TestComponentDetailView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

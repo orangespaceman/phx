@@ -8,6 +8,7 @@ from ..factories import FixtureFactory
 
 
 class TestFixturesView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

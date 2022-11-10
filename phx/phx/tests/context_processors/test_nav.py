@@ -6,6 +6,7 @@ from ...context_processors.nav import nav
 
 
 class TestContextProcessorNav(TestCase):
+
     def test_nav(self):
         """
         Test nav returns expected number of results
