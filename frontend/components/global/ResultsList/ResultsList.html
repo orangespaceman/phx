@@ -24,6 +24,22 @@
           </li>
         {% endfor %}
       </ul>
+      <p class="ResultsList-filterTitle">
+        Order:
+      </p>
+      <ul class="ResultsList-filterList">
+        <li class="ResultsList-filterItem">
+          <a
+            class="ResultsList-filterLink {% if order != '' %}is-inactive{% endif %}"
+          href="{% url 'results-index' %}{% if search %}?search={{search}}{% endif %}"
+          >Date added</a>
+        </li>
+        <li class="ResultsList-filterItem">
+          <a
+            class="ResultsList-filterLink {% if order != 'race-date' %}is-inactive{% endif %}"
+          href="{% url 'results-index' %}?order=race-date{% if search %}&amp;search={{search}}{% endif %}"
+          >Race date</a>
+        </li>
     </div>
     <div class="ResultsList-filterSearch" >
         {% include '../ListFilter/ListFilter.html' %}

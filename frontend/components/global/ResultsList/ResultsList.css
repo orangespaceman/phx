@@ -20,6 +20,10 @@
 
 /* Filters - categories */
 
+.ResultsList-filterCategories {
+  margin-bottom: var(--gutter);
+}
+
 .ResultsList-filterTitle {
   display: inline-block;
   line-height: var(--line-height-editorial);
@@ -27,7 +31,7 @@
 
 .ResultsList-filterList {
   display: inline-block;
-  margin-bottom: var(--gutter-double);
+  margin-bottom: var(--gutter-quarter);
 }
 
 .ResultsList-filterItem {

@@ -33,6 +33,7 @@ class ResultsListView(generic.ListView):
             *COMPONENT_TYPES).filter(page_id=page.id)
         context['categories'] = Category.objects.all()
         context['search'] = self.request.GET.get('search', '')
+        context['order'] = self.request.GET.get('order', '')
         context['category'] = self.request.GET.get('category', '')
         context['subnav'] = generate_subnav(self.request.path, context['page'])
         context['year_range'] = self.calculate_year_range()
@@ -48,8 +49,7 @@ class ResultsListView(generic.ListView):
     def get_queryset(self):
         query = Result.objects.prefetch_related(
             'fixture__categories').select_related('fixture').filter(
-                fixture__event_date__lte=timezone.now(), ).order_by(
-                    '-fixture__event_date').distinct()
+                fixture__event_date__lte=timezone.now(), )
 
         search = self.request.GET.get('search')
         if search:
@@ -68,6 +68,12 @@ class ResultsListView(generic.ListView):
         year_range = self.calculate_year_range()
         if year and int(year) in year_range:
             query = query.filter(fixture__event_date__year=year)
+
+        order = self.request.GET.get('order', '')
+        if order and order == 'race-date':
+            query = query.order_by('-fixture__event_date').distinct()
+        else:
+            query = query.order_by('-created_date').distinct()
 
         return query
 
