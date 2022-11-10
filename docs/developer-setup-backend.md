@@ -16,14 +16,14 @@ Once you have cloned this repo, run through the following steps:
 
 ## Python
 
-This project has been developed in Python 3.6.5 - to check what version of Python you are running in your console run:
+This project has been developed in Python 3.10.7 - to check what version of Python you are running in your console run:
 
 ```
 python --version
 python3 --version
 ```
 
-Please install Python 3.6.5 if you do not have it. We suggest using [pyenv](https://github.com/pyenv/pyenv) to manage python versions easily.
+Please install Python 3.10.7 if you do not have it. We suggest using [pyenv](https://github.com/pyenv/pyenv) to manage python versions easily.
 
 
 ### Install pyenv using Homebrew
@@ -40,10 +40,10 @@ eval "$(pyenv init -)"
 ```
 
 
-### Install Python 3.6.5 with pyenv
+### Install Python 3.10.7 with pyenv
 
 ```
-pyenv install 3.6.5
+pyenv install 3.10.7
 ```
 
 
@@ -60,7 +60,7 @@ pip install virtualenv
 Create the virtualenv:
 
 ```
-virtualenv env --python=$HOME/.pyenv/versions/3.6.5/bin/python
+virtualenv env --python=$HOME/.pyenv/versions/3.10.7/bin/python
 ```
 
 To activate the virtualenv, run:
