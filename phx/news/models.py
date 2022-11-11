@@ -2,18 +2,22 @@ from components.models import (
     AbstractEditorial,
     AbstractEmbed,
     AbstractFeature,
+    AbstractGallery,
     AbstractImage,
     AbstractListItem,
     AbstractListItems,
     AbstractProfile,
     AbstractProfileMember,
     AbstractQuote,
+    AbstractResult,
     AbstractTable,
 )
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
+from gallery.models import Gallery as GalleryModel
+from results.models import Result as ResultModel
 
 
 class News(models.Model):
@@ -218,4 +222,34 @@ class Table(AbstractTable):
         Component,
         on_delete=models.CASCADE,
         related_name='table',
+    )
+
+
+class Result(AbstractResult):
+    component = models.OneToOneField(
+        Component,
+        on_delete=models.CASCADE,
+        related_name='result',
+    )
+    result = models.ForeignKey(
+        ResultModel,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='news_result',
+    )
+
+
+class Gallery(AbstractGallery):
+    component = models.OneToOneField(
+        Component,
+        on_delete=models.CASCADE,
+        related_name='gallery',
+    )
+    gallery = models.ForeignKey(
+        GalleryModel,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='news_gallery',
     )

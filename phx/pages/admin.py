@@ -3,12 +3,14 @@ from components.admin import (
     AbstractEditorialAdmin,
     AbstractEmbedAdmin,
     AbstractFeatureAdmin,
+    AbstractGalleryAdmin,
     AbstractImageAdmin,
     AbstractListItemAdmin,
     AbstractListItemsAdmin,
     AbstractProfileAdmin,
     AbstractProfileMemberAdmin,
     AbstractQuoteAdmin,
+    AbstractResultAdmin,
     AbstractTableAdmin,
 )
 
@@ -19,6 +21,7 @@ from .models import (
     Editorial,
     Embed,
     Feature,
+    Gallery,
     Image,
     ListItem,
     ListItems,
@@ -26,6 +29,7 @@ from .models import (
     Profile,
     ProfileMember,
     Quote,
+    Result,
     Table,
 )
 
@@ -68,6 +72,16 @@ class QuoteAdmin(AbstractQuoteAdmin):
     model = Quote
 
 
+class ResultAdmin(AbstractResultAdmin):
+    model = Result
+    autocomplete_fields = ['result']
+
+
+class GalleryAdmin(AbstractGalleryAdmin):
+    model = Gallery
+    autocomplete_fields = ['gallery']
+
+
 class TableAdmin(AbstractTableAdmin):
     model = Table
 
@@ -83,6 +97,8 @@ class ComponentAdmin(nested_admin.NestedStackedInline):
         ListItemsAdmin,
         ProfileAdmin,
         QuoteAdmin,
+        ResultAdmin,
+        GalleryAdmin,
         TableAdmin,
     ]
     # disable drag/drop sorting, in order for the ordering value to work

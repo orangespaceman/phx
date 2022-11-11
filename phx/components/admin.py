@@ -106,3 +106,15 @@ class AbstractTableAdmin(AbstractComponentAdmin):
 
     class Meta:
         abstract = True
+
+
+class AbstractResultAdmin(AbstractComponentAdmin):
+
+    class Meta:
+        abstract = True
+
+
+class AbstractGalleryAdmin(AbstractComponentAdmin):
+
+    class Meta:
+        abstract = True

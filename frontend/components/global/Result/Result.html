@@ -1,0 +1,41 @@
+{% load templatehelpers %}
+{% load highlight %}
+
+<div class="Result {% if alt %}Result--alt{% endif %}">
+  <p class="Result-categories">
+    {{result.categories.all|join:', '}}
+  </p>
+  <h3 class="Result-title">
+    {{result.title|highlight:search|safe}}
+  </h3>
+  <p class="Result-subtitle">
+    <span class="Result-date">{{result.event_date|date:'D j M Y'}}</span>
+  </p>
+  {% if show_news_link %}
+    {% for news_result in result.news_result.all %}
+      <div class="Result-news">
+        {% include '../News/News.html' with news=news_result.component.news search='' %}
+      </div>
+    {% endfor %}
+  {% endif %}
+  <div class="Result-summary">
+    <div class="Editorial">
+      {{result.summary|highlight:search|safe}}
+    </div>
+  </div>
+  <p class="Result-results">
+    {{result.results|highlight:search|safe}}
+  </p>
+  <ul class="Result-links">
+    {% if result.event_url %}
+      <li class="Result-linkItem">
+        <a class="Result-link" href="{{result.event_url}}">Event link</a>
+      </li>
+    {% endif %}
+    {% if result.results_url %}
+      <li class="Result-linkItem">
+        <a class="Result-link" href="{{result.results_url}}">Results link</a>
+      </li>
+    {% endif %}
+  </ul>
+</div>

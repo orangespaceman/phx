@@ -1,7 +1,3 @@
-{% load static %}
-{% load thumbnail %}
-{% load highlight %}
-
 <div class="NewsList">
 
   <div class="NewsList-filter">
@@ -12,24 +8,7 @@
     <ul class="NewsList-list">
       {% for story in news %}
         <li class="NewsList-item">
-          <a class="NewsList-link" href="{% url 'news-detail' pk=story.pk slug=story.slug %}">
-            <div class="NewsList-thumb">
-              {% if story.thumbnail %}
-                <img class="NewsList-thumbImg" src="{% thumbnail story.thumbnail.image 700x500 crop %}" alt="{{story.thumbnail.image_alt}}" />
-              {% else %}
-                <img class="NewsList-thumbImg" src="{% static 'img/no-image-bg.jpg' %}" alt="" />
-              {% endif %}
-            </div>
-            <div class="NewsList-content">
-              <h3 class="NewsList-title">{{story.title|highlight:search|safe}}</h3>
-              <p class="NewsList-text">
-                <em>{{story.created_date|date:'D j M Y'}}</em>
-              </p>
-              <p class="NewsList-text">
-                {{story.summary|highlight:search|safe|truncatewords_html:50}}
-              </p>
-            </div>
-          </a>
+          {% include '../News/News.html' with news=story search=search %}
         </li>
       {% endfor %}
     </ul>

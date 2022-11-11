@@ -49,36 +49,9 @@
   {% if results %}
     <ul class="ResultsList-list">
       {% for result in results %}
+        {% cycle False True as alt silent %}
         <li class="ResultsList-item" id="result-{{result.id}}">
-          <p class="ResultsList-categories">
-            {{result.categories.all|join:', '}}
-          </p>
-          <h3 class="ResultsList-title">
-            {{result.title|highlight:search|safe}}
-          </h3>
-          <p class="ResultsList-subtitle">
-            <span class="ResultsList-date">{{result..event_date|date:'D j M Y'}}</span>
-          </p>
-          <div class="ResultsList-summary">
-            <div class="Editorial">
-              {{result.summary|highlight:search|safe}}
-            </div>
-          </div>
-          <p class="ResultsList-results">
-            {{result.results|highlight:search|safe}}
-          </p>
-          <ul class="ResultsList-NewsList">
-            {% if result.event_url %}
-              <li class="ResultsList-linkItem">
-                <a class="ResultsList-link" href="{{result.event_url}}">Event link</a>
-              </li>
-            {% endif %}
-            {% if result.results_url %}
-              <li class="ResultsList-linkItem">
-                <a class="ResultsList-link" href="{{result.results_url}}">Results link</a>
-              </li>
-            {% endif %}
-          </ul>
+          {% include '../Result/Result.html' with result=result search=search alt=alt show_news_link=True %}
         </li>
       {% endfor %}
     </ul>

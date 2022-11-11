@@ -8,6 +8,8 @@ from .models import Result
 class ResultAdmin(admin.ModelAdmin):
     # display data on results listing view
     list_display = ['title', 'event_date', 'author']
+    ordering = ['created_date']
+    search_fields = ['title']
 
     # order list display view by event date
     def get_queryset(self, request):

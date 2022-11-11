@@ -1,0 +1,15 @@
+{% extends 'components/components_detail.html' %}
+
+{% load components_tags %}
+
+{% block component %}
+  <h3 class="Demo-h3">Default</h3>
+  <div class="Demo-block Demo-block--1">
+    {% with template="components/"|add:group|add:"/"|add:component|add:"/"|add:component|add:".html" %}
+      {% include template with news=data.news search='' %}
+    {% endwith %}
+    <h4 class="Demo-h4">Data</h4>
+    <pre class="Demo-code">{{data|pretty_print}}</pre>
+  </div>
+
+{% endblock component %}

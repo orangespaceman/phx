@@ -50,6 +50,7 @@ class GalleryAdmin(admin.ModelAdmin):
     list_prefetch_related = ['images']
     search_fields = ['title']
     readonly_fields = ['slug']
+    ordering = ['-created_date']
     exclude = ['author']
     inlines = [ThumbnailAdmin, ImageAdmin]
 
