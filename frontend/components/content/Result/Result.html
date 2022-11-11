@@ -1,0 +1,5 @@
+{% if data.result %}
+  <div class="ResultComponent">
+    {% include '../../global/Result/Result.html' with result=data.result search='' alt=True %}
+  </div>
+{% endif %}

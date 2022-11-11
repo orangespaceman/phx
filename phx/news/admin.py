@@ -3,12 +3,14 @@ from components.admin import (
     AbstractEditorialAdmin,
     AbstractEmbedAdmin,
     AbstractFeatureAdmin,
+    AbstractGalleryAdmin,
     AbstractImageAdmin,
     AbstractListItemAdmin,
     AbstractListItemsAdmin,
     AbstractProfileAdmin,
     AbstractProfileMemberAdmin,
     AbstractQuoteAdmin,
+    AbstractResultAdmin,
     AbstractTableAdmin,
 )
 from django.utils.html import format_html
@@ -21,6 +23,7 @@ from .models import (
     Editorial,
     Embed,
     Feature,
+    Gallery,
     Image,
     ListItem,
     ListItems,
@@ -28,6 +31,7 @@ from .models import (
     Profile,
     ProfileMember,
     Quote,
+    Result,
     Table,
     Thumbnail,
 )
@@ -71,6 +75,16 @@ class QuoteAdmin(AbstractQuoteAdmin):
     model = Quote
 
 
+class ResultAdmin(AbstractResultAdmin):
+    model = Result
+    autocomplete_fields = ['result']
+
+
+class GalleryAdmin(AbstractGalleryAdmin):
+    model = Gallery
+    autocomplete_fields = ['gallery']
+
+
 class TableAdmin(AbstractTableAdmin):
     model = Table
 
@@ -86,9 +100,13 @@ class ComponentAdmin(nested_admin.NestedStackedInline):
         ListItemsAdmin,
         ProfileAdmin,
         QuoteAdmin,
+        ResultAdmin,
+        GalleryAdmin,
         TableAdmin,
     ]
-    sortable_field_name = 'order'
+    # disable drag/drop sorting, in order for the ordering value to work
+    # when using the following var, the order set in the admin is ignored
+    # sortable_field_name = 'order'
 
 
 class ThumbnailAdmin(nested_admin.NestedStackedInline):

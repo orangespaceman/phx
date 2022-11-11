@@ -4,18 +4,18 @@
  * Copy assets into static folder
  */
 
-const copy = require("copy");
-const glob = require("glob");
-const clc = require("cli-color");
-const del = require("del");
+import copy from "copy";
+import glob from "glob";
+import clc from "cli-color";
+import { deleteAsync } from "del";
 
 const cwd = process.cwd();
 const componentDir = "frontend/components";
 const targetDir = "phx/templates/components";
 
 function start() {
-  del([targetDir + "**/*"]).then(paths => {
-    paths.forEach(path => {
+  deleteAsync([targetDir + "**/*"]).then((paths) => {
+    paths.forEach((path) => {
       console.log(clc.green("Deleted: " + path.replace(cwd, "")));
     });
     findFiles();
@@ -27,7 +27,7 @@ function findFiles() {
     "**/*+(.html|.json)",
     {
       cwd: componentDir,
-      nodir: true
+      nodir: true,
     },
     duplicate
   );
@@ -39,7 +39,7 @@ function duplicate(error, files) {
       files,
       `../../${targetDir}`,
       {
-        cwd: componentDir
+        cwd: componentDir,
       },
       report
     );
@@ -50,7 +50,7 @@ function duplicate(error, files) {
 
 function report(error, files) {
   if (!error) {
-    files.forEach(file => {
+    files.forEach((file) => {
       console.log(clc.green(`Copied: ${file.relative}`));
     });
   } else {

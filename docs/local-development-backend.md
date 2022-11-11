@@ -106,7 +106,13 @@ Code is auto-formatted with yapf.
 To check for yapf formatting errors in a terminal window:
 
 ```
-yapf --diff --recursive --exclude=*migrations* phx
+yapf --diff --recursive phx
+```
+
+To fix reported yapf errors:
+
+```
+yapf --in-place --recursive phx
 ```
 
 ### Tests

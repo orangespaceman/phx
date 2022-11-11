@@ -1,0 +1,18 @@
+{% if data.gallery %}
+  <div class="GalleryComponent">
+    {% if data.gallery.title %}<h3 class="GalleryComponent-title">{{data.gallery.title}}</h3>{% endif %}
+    <div class="Editorial">
+      {% if data.gallery.summary %}
+      <p class="GalleryComponent-summary">{{data.gallery.summary}}</p>
+      {% endif %}
+      {% if data.gallery.event_date %}
+      <p>
+        <em>{{data.gallery.event_date|date:"l jS F Y"}}</em>
+      </p>
+      {% endif %}
+    </div>
+    <div class="GalleryComponent-gallery">
+      {% include '../../global/Gallery/Gallery.html' with gallery=data.gallery.images.all controls=True %}
+    </div>
+  </div>
+{% endif %}

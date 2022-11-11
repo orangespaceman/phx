@@ -25,6 +25,7 @@ from ..factories import (
 
 
 class TestHomeView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected
@@ -193,8 +194,7 @@ class TestHomeView(TestCase):
         ContentFactory()
 
         past = timezone.now() - timezone.timedelta(days=7)
-        fixture = FixtureFactory(event_date=past)
-        ResultFactory(fixture=fixture)
+        ResultFactory(event_date=past)
 
         response = self.client.get(url)
 

@@ -108,15 +108,9 @@
         {% for result in results %}
         <tr class="GridBlocks-tableRow">
           <th class="GridBlocks-tableHead">
-            <a class="GridBlocks-link" href="{% url 'results-index' %}#result-{{result.id}}">{{result.fixture.title}}</a>
-            {% if result.fixture.age_groups %}
-              - {{result.fixture.age_groups}}
-            {% endif %}
-            {% if result.fixture.location %}
-              ({{result.fixture.location}})
-            {% endif %}
+            <a class="GridBlocks-link" href="{% url 'results-index' %}#result-{{result.id}}">{{result.title}}</a>
           </th>
-          <td class="GridBlocks-tableData">{{result.fixture.event_date|date:'D j M Y'}}</td>
+          <td class="GridBlocks-tableData">{{result.event_date|date:'D j M Y'}}</td>
         </tr>
         {% endfor %}
     </table>

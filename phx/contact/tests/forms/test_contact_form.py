@@ -9,6 +9,7 @@ from ...models import Contact, Topic
 @patch('contact.forms.send_mail')
 @override_settings(CONTACT_EMAIL='test@test.com')
 class TestContactForm(TestCase):
+
     def test_form_success(self, send_mail):
         """
         Form works as expected with valid form data

@@ -1,0 +1,16 @@
+{
+  "news": {
+    "id": "1",
+    "pk": "1",
+    "slug": "blah",
+    "created_date": "2018-06-01 09:00:00",
+    "title": "Culpa ex est esse",
+    "summary": "Lorem et aliqua aliqua cupidatat non laborum est velit proident pariatur.",
+    "thumbnail": {
+      "image": {
+        "url": "/static/img/_placeholder/gallery/1.jpg"
+      },
+      "image_alt": "Lorem"
+    }
+  }
+}

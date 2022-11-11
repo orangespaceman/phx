@@ -1,10 +1,10 @@
 var Nav = {
   els: {
     nav: ".js-Nav",
-    toggle: ".js-Nav-toggle"
+    toggle: ".js-Nav-toggle",
   },
 
-  init: function() {
+  init: function () {
     this.navEl = document.querySelector(this.els.nav);
     this.toggleEl = document.querySelector(this.els.toggle);
 
@@ -14,10 +14,10 @@ var Nav = {
     this.toggleEl.addEventListener("click", this.toggleNav.bind(this));
   },
 
-  toggleNav: function(e) {
+  toggleNav: function (e) {
     e.preventDefault();
     this.navEl.classList.toggle("Nav--open");
-  }
+  },
 };
 
-module.exports = Nav;
+export default Nav;

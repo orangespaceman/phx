@@ -6,6 +6,7 @@ from ...templatetags.paginator import paginator
 
 
 class TestTemplateTagsPaginator(TestCase):
+
     def test_paginator_simple(self):
         """
         Return paginator params for three pages

@@ -26,14 +26,14 @@ function init() {
   filterClear.addEventListener("click", onFilterClear);
 
   filterCategories = filter.querySelectorAll(".js-FixturesList-filterLink");
-  Array.prototype.forEach.call(filterCategories, function(filterCategory) {
+  Array.prototype.forEach.call(filterCategories, function (filterCategory) {
     filterCategory.addEventListener("click", onCategorySelected);
   });
 }
 
 function onCategorySelected(e) {
   e.preventDefault();
-  Array.prototype.forEach.call(filterCategories, function(filterCategory) {
+  Array.prototype.forEach.call(filterCategories, function (filterCategory) {
     setInactiveState(filterCategory);
   });
   setActiveState(e.target);
@@ -74,7 +74,7 @@ function onFilterUpdate() {
     showClear();
   }
 
-  Array.prototype.forEach.call(filterTableRows, function(row) {
+  Array.prototype.forEach.call(filterTableRows, function (row) {
     if (
       (row.dataset.categories.toLowerCase().indexOf(searchValue) > -1 ||
         row.textContent.toLowerCase().indexOf(searchValue) > -1) &&
@@ -87,6 +87,6 @@ function onFilterUpdate() {
   });
 }
 
-module.exports = {
-  init: init
+export default {
+  init: init,
 };

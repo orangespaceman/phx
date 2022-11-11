@@ -3,16 +3,19 @@ from components.models import (
     BACKGROUND_CHOICES,
     TEXT_SIZE_CHOICES,
 )
-from factory import RelatedFactory, Sequence
+from factory import RelatedFactory, Sequence, SubFactory
 from factory.django import ImageField
 from factory.fuzzy import FuzzyChoice, FuzzyText
 from factory_djoy import CleanModelFactory
+from gallery.tests.factories import GalleryFactory as GalleryModelFactory
+from results.tests.factories import ResultFactory as ResultModelFactory
 
 from ..models import (
     Component,
     Editorial,
     Embed,
     Feature,
+    Gallery,
     Image,
     ListItem,
     ListItems,
@@ -20,6 +23,7 @@ from ..models import (
     Profile,
     ProfileMember,
     Quote,
+    Result,
     Table,
     Thumbnail,
 )
@@ -86,6 +90,7 @@ class ImageFactory(CleanModelFactory):
 
 
 class ListItemsFactory(CleanModelFactory):
+
     class Meta:
         model = ListItems
 
@@ -132,3 +137,17 @@ class TableFactory(CleanModelFactory):
 
     class Meta:
         model = Table
+
+
+class ResultFactory(CleanModelFactory):
+    result = SubFactory(ResultModelFactory)
+
+    class Meta:
+        model = Result
+
+
+class GalleryFactory(CleanModelFactory):
+    gallery = SubFactory(GalleryModelFactory)
+
+    class Meta:
+        model = Gallery

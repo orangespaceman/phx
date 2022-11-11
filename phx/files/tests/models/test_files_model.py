@@ -7,6 +7,7 @@ from ...models import file_size_validator
 
 
 class TestFilesModel(TestCase):
+
     @patch('files.models.ValidationError')
     def test_validation_pass(self, validation_error):
         """

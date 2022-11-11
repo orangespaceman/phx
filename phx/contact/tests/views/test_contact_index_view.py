@@ -7,6 +7,7 @@ from ...models import Message, Topic
 
 
 class TestContactIndexView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

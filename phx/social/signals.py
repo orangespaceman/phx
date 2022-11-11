@@ -13,7 +13,7 @@ def save_news(sender, instance, created, **kwargs):
 def save_results(sender, instance, created, **kwargs):
     if created:
         url = get_results_url(instance)
-        save('Results', instance.fixture.title, url)
+        save('Results', instance.title, url)
 
 
 def save_gallery(sender, instance, created, **kwargs):

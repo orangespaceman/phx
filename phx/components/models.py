@@ -9,6 +9,8 @@ COMPONENT_TYPES = [
     'list_items',
     'profile',
     'quote',
+    'result',
+    'gallery',
     'table',
 ]
 
@@ -109,6 +111,7 @@ class AbstractImage(AbstractComponent):
 
 
 class AbstractListItems(AbstractComponent):
+
     class Meta:
         abstract = True
         verbose_name = 'list items'
@@ -196,3 +199,21 @@ class AbstractTable(AbstractComponent):
 
     def __str__(self):
         return 'table'
+
+
+class AbstractResult(AbstractComponent):
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return 'result'
+
+
+class AbstractGallery(AbstractComponent):
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return 'gallery'

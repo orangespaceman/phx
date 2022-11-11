@@ -46,6 +46,7 @@ class Gallery(models.Model):
 
 
 class Thumbnail(models.Model):
+
     def get_upload_path(self, filename):
         id = self.gallery_id
         return 'gallery/{0}/thumbnail/{1}'.format(id, filename)
@@ -67,6 +68,7 @@ class Thumbnail(models.Model):
 
 
 class Image(models.Model):
+
     def get_upload_path(self, filename):
         id = self.gallery_id
         return 'gallery/{0}/image/{1}'.format(id, filename)

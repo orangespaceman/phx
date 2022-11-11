@@ -7,6 +7,7 @@ from ..factories import (
     EditorialFactory,
     EmbedFactory,
     FeatureFactory,
+    GalleryFactory,
     ImageFactory,
     ListItemFactory,
     ListItemsFactory,
@@ -14,11 +15,13 @@ from ..factories import (
     ProfileFactory,
     ProfileMemberFactory,
     QuoteFactory,
+    ResultFactory,
     TableFactory,
 )
 
 
 class TestNewsDetailsView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected
@@ -208,3 +211,33 @@ class TestNewsDetailsView(TestCase):
         first_table = component.table
         self.assertEqual(first_table, table)
         self.assertEqual(first_table.title, 'first table block')
+
+    def test_component_result(self):
+        """"
+        GET request returns result component as expected
+        """
+        news = NewsFactory()
+        result = ResultFactory(
+            component=SubFactory(ComponentFactory, news=news))
+
+        url = reverse('news-detail', kwargs={'pk': news.id, 'slug': news.slug})
+
+        response = self.client.get(url)
+        component = response.context['components'].first()
+        first_result = component.result
+        self.assertEqual(first_result, result)
+
+    def test_component_gallery(self):
+        """"
+        GET request returns gallery component as expected
+        """
+        news = NewsFactory()
+        gallery = GalleryFactory(
+            component=SubFactory(ComponentFactory, news=news))
+
+        url = reverse('news-detail', kwargs={'pk': news.id, 'slug': news.slug})
+
+        response = self.client.get(url)
+        component = response.context['components'].first()
+        first_gallery = component.gallery
+        self.assertEqual(first_gallery, gallery)

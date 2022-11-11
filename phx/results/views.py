@@ -33,6 +33,7 @@ class ResultsListView(generic.ListView):
             *COMPONENT_TYPES).filter(page_id=page.id)
         context['categories'] = Category.objects.all()
         context['search'] = self.request.GET.get('search', '')
+        context['order'] = self.request.GET.get('order', '')
         context['category'] = self.request.GET.get('category', '')
         context['subnav'] = generate_subnav(self.request.path, context['page'])
         context['year_range'] = self.calculate_year_range()
@@ -46,28 +47,31 @@ class ResultsListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        query = Result.objects.prefetch_related(
-            'fixture__categories').select_related('fixture').filter(
-                fixture__event_date__lte=timezone.now(), ).order_by(
-                    '-fixture__event_date').distinct()
+        query = Result.objects.prefetch_related('categories').filter(
+            event_date__lte=timezone.now(), )
 
         search = self.request.GET.get('search')
         if search:
             query = query.filter(
                 Q(summary__icontains=search) | Q(results__icontains=search)
-                | Q(fixture__title__icontains=search)
-                | Q(fixture__location__icontains=search)
-                | Q(fixture__categories__abbreviation__icontains=search)
-                | Q(fixture__categories__title__icontains=search))
+                | Q(title__icontains=search)
+                | Q(categories__abbreviation__icontains=search)
+                | Q(categories__title__icontains=search))
 
         category = self.request.GET.get('category')
         if category:
-            query = query.filter(fixture__categories__abbreviation=category)
+            query = query.filter(categories__abbreviation=category)
 
         year = self.request.GET.get('year', '')
         year_range = self.calculate_year_range()
         if year and int(year) in year_range:
-            query = query.filter(fixture__event_date__year=year)
+            query = query.filter(event_date__year=year)
+
+        order = self.request.GET.get('order', '')
+        if order and order == 'race-date':
+            query = query.order_by('-event_date').distinct()
+        else:
+            query = query.order_by('-created_date').distinct()
 
         return query
 

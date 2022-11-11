@@ -4,6 +4,7 @@ from ...templatetags.templatehelpers import url_self_with_params
 
 
 class TestTemplateTagsTemplateHelpers(TestCase):
+
     def test_url_no_params(self):
         """
         Return page param

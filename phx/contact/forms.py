@@ -53,9 +53,13 @@ class ContactForm(forms.Form):
         cleaned_data = super().clean()
         phone_no = cleaned_data.get("phone_no")
         if len(phone_no) != 0:
-            logger.warning("Email attempt using honeypot: '{}'".format(
-                cleaned_data.get('message').replace('\n',
-                                                    ' ').replace('\r', '')))
+            try:
+                message = cleaned_data.get('message')
+                msg = message.replace('\n', ' ').replace('\r', '')
+            except Exception:
+                msg = "(no message)"
+
+            logger.warning("Email attempt using honeypot: '{}'".format(msg))
             raise forms.ValidationError(
                 "Sorry, something went wrong. "
                 "Please try again, or send us an email.")

@@ -24,6 +24,22 @@
           </li>
         {% endfor %}
       </ul>
+      <p class="ResultsList-filterTitle">
+        Order:
+      </p>
+      <ul class="ResultsList-filterList">
+        <li class="ResultsList-filterItem">
+          <a
+            class="ResultsList-filterLink {% if order != '' %}is-inactive{% endif %}"
+          href="{% url 'results-index' %}{% if search %}?search={{search}}{% endif %}"
+          >Date added</a>
+        </li>
+        <li class="ResultsList-filterItem">
+          <a
+            class="ResultsList-filterLink {% if order != 'race-date' %}is-inactive{% endif %}"
+          href="{% url 'results-index' %}?order=race-date{% if search %}&amp;search={{search}}{% endif %}"
+          >Race date</a>
+        </li>
     </div>
     <div class="ResultsList-filterSearch" >
         {% include '../ListFilter/ListFilter.html' %}
@@ -33,42 +49,9 @@
   {% if results %}
     <ul class="ResultsList-list">
       {% for result in results %}
+        {% cycle False True as alt silent %}
         <li class="ResultsList-item" id="result-{{result.id}}">
-          <p class="ResultsList-categories">
-            {{result.fixture.categories.all|join:', '}}
-          </p>
-          <h3 class="ResultsList-title">
-            {{result.fixture.title|highlight:search|safe}}
-          </h3>
-          <p class="ResultsList-subtitle">
-            <span class="ResultsList-date">{{result.fixture.event_date|date:'D j M Y'}}</span>
-            {% if result.fixture.age_group %}
-              - <span class="ResultsList-age_group">{{result.fixture.age_group|highlight:search|safe}}</span>
-            {% endif %}
-            {% if result.fixture.location %}
-              (<span class="ResultsList-location">{{result.fixture.location|highlight:search|safe}}</span>)
-            {% endif %}
-          </p>
-          <div class="ResultsList-summary">
-            <div class="Editorial">
-              {{result.summary|highlight:search|safe}}
-            </div>
-          </div>
-          <p class="ResultsList-results">
-            {{result.results|highlight:search|safe}}
-          </p>
-          <ul class="ResultsList-NewsList">
-            {% if result.fixture.link_url %}
-              <li class="ResultsList-linkItem">
-                <a class="ResultsList-link" href="{{result.fixture.link_url}}">Event link</a>
-              </li>
-            {% endif %}
-            {% if result.results_url %}
-              <li class="ResultsList-linkItem">
-                <a class="ResultsList-link" href="{{result.results_url}}">Results link</a>
-              </li>
-            {% endif %}
-          </ul>
+          {% include '../Result/Result.html' with result=result search=search alt=alt show_news_link=True %}
         </li>
       {% endfor %}
     </ul>

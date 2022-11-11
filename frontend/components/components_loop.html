@@ -24,5 +24,11 @@
     {% if component.table %}
       {% include './content/Table/Table.html' with data=component.table %}
     {% endif %}
+    {% if component.result %}
+      {% include './content/Result/Result.html' with data=component.result %}
+    {% endif %}
+    {% if component.gallery %}
+      {% include './content/Gallery/Gallery.html' with data=component.gallery %}
+    {% endif %}
   </div>
 {% endfor %}

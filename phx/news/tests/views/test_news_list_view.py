@@ -8,6 +8,7 @@ from ..factories import NewsFactory
 
 
 class TestNewsListView(TestCase):
+
     def test_url_resolves(self):
         """"
         URL resolves as expected

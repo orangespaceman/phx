@@ -1,0 +1,28 @@
+/**
+ * @define GalleryComponent; use strict
+ */
+
+.GalleryComponent {
+  position: relative;
+}
+
+/* title */
+
+.GalleryComponent-title {
+  font-size: var(--font-size-h3);
+  font-weight: normal;
+  line-height: var(--line-height-default);
+  margin-bottom: var(--gutter);
+}
+
+.GalleryComponent-gallery {
+  height: 300px;
+  position: relative;
+  width: 100%;
+}
+
+@media (--medium) {
+  .GalleryComponent-gallery {
+    height: 500px;
+  }
+}

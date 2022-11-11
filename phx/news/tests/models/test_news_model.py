@@ -5,6 +5,7 @@ from ..factories import NewsFactory
 
 
 class TestNewsModel(TestCase):
+
     def test_get_absolute_url(self):
         """
         Get the URL for the News instance - the sluggified title

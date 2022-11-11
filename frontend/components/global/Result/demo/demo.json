@@ -1,0 +1,13 @@
+{
+  "summary": "Summary text",
+  "results": "<table><tr><th>Position</th><th>Name</th><th>Time</th></tr> <tr><td>1</td><td>Me</td><td>01:01</td></tr> <tr><td>2</td><td>You</td><td>03:21</td></tr></table>",
+  "fixture": {
+    "link_url": "#",
+    "title": "Lorem ipsum",
+    "event_date": "Date",
+    "location": "Location",
+    "categories": {
+      "all": ["Cat1", "Cat2", "Cat3"]
+    }
+  }
+}

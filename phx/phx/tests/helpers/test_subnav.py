@@ -5,6 +5,7 @@ from ...helpers.subnav import generate_subnav
 
 
 class TestHelperSubnav(TestCase):
+
     def setUp(self):
         top = Page.objects.create(title='lorem')
 

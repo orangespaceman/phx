@@ -1,5 +1,5 @@
-var tableOptions = require("./admin/table-options");
-var components = require("./admin/components");
+import tableOptions from "./admin/table-options.js";
+import components from "./admin/components.js";
 
 tableOptions.init();
 components.init();

@@ -2,18 +2,22 @@ from components.models import (
     AbstractEditorial,
     AbstractEmbed,
     AbstractFeature,
+    AbstractGallery,
     AbstractImage,
     AbstractListItem,
     AbstractListItems,
     AbstractProfile,
     AbstractProfileMember,
     AbstractQuote,
+    AbstractResult,
     AbstractTable,
 )
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
+from gallery.models import Gallery as GalleryModel
+from results.models import Result as ResultModel
 
 
 class News(models.Model):
@@ -58,6 +62,7 @@ class News(models.Model):
 
 
 class Thumbnail(models.Model):
+
     def get_upload_path(self, filename):
         id = self.news_id
         return 'news/{0}/thumbnail/{1}'.format(id, filename)
@@ -116,6 +121,7 @@ class Embed(AbstractEmbed):
 
 
 class Feature(AbstractFeature):
+
     def get_upload_path(self, filename):
         id = self.component.news_id
         return 'news/{0}/feature/{1}'.format(id, filename)
@@ -129,6 +135,7 @@ class Feature(AbstractFeature):
 
 
 class Image(AbstractImage):
+
     def get_upload_path(self, filename):
         id = self.component.news_id
         return 'news/{0}/image/{1}'.format(id, filename)
@@ -150,6 +157,7 @@ class ListItems(AbstractListItems):
 
 
 class ListItem(AbstractListItem):
+
     def get_upload_path(self, filename):
         id = self.list_items.component.news_id
         return 'news/{0}/list-items/{1}'.format(id, filename)
@@ -176,6 +184,7 @@ class Profile(AbstractProfile):
 
 
 class ProfileMember(AbstractProfileMember):
+
     def get_upload_path(self, filename):
         id = self.profile.component.news_id
         return 'news/{0}/profile/{1}'.format(id, filename)
@@ -195,6 +204,7 @@ class ProfileMember(AbstractProfileMember):
 
 
 class Quote(AbstractQuote):
+
     def get_upload_path(self, filename):
         id = self.component.news_id
         return 'news/{0}/quote/{1}'.format(id, filename)
@@ -212,4 +222,34 @@ class Table(AbstractTable):
         Component,
         on_delete=models.CASCADE,
         related_name='table',
+    )
+
+
+class Result(AbstractResult):
+    component = models.OneToOneField(
+        Component,
+        on_delete=models.CASCADE,
+        related_name='result',
+    )
+    result = models.ForeignKey(
+        ResultModel,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='news_result',
+    )
+
+
+class Gallery(AbstractGallery):
+    component = models.OneToOneField(
+        Component,
+        on_delete=models.CASCADE,
+        related_name='gallery',
+    )
+    gallery = models.ForeignKey(
+        GalleryModel,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='news_gallery',
     )

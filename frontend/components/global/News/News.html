@@ -1,0 +1,24 @@
+{% load static %}
+{% load thumbnail %}
+{% load highlight %}
+
+<div class="News">
+  <a class="News-link" href="{% url 'news-detail' pk=news.pk slug=news.slug %}">
+    <div class="News-thumb">
+      {% if news.thumbnail %}
+        <img class="News-thumbImg" src="{% thumbnail news.thumbnail.image 700x500 crop %}" alt="{{news.thumbnail.image_alt}}" />
+      {% else %}
+        <img class="News-thumbImg" src="{% static 'img/no-image-bg.jpg' %}" alt="" />
+      {% endif %}
+    </div>
+    <div class="News-content">
+      <h3 class="News-title">{{news.title|highlight:search|safe}}</h3>
+      <p class="News-text">
+        <em>{{news.created_date|date:'D j M Y'}}</em>
+      </p>
+      <p class="News-text">
+        {{news.summary|highlight:search|safe|truncatewords_html:50}}
+      </p>
+    </div>
+  </a>
+</div>
