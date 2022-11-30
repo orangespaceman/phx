@@ -55,7 +55,7 @@ GalleryInstance.prototype.init = function (container) {
   // start transition once first new bg image has loaded
   var img = new Image();
   img.addEventListener("load", this.imageLoaded.bind(this));
-  img.src = container.dataset.img;
+  img.src = this.items[1].dataset.img;
 
   // init controls if found
   this.back = this.container.querySelector(this.els.back);
