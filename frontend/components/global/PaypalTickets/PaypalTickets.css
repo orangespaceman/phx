@@ -1,0 +1,21 @@
+/*
+ * @define PaypalTickets
+ */
+
+.PaypalTickets-title {
+  margin-bottom: var(--gutter-half);
+  margin-top: var(--gutter-double);
+}
+
+.PaypalTickets-ticketType,
+.PaypalTickets-mealType {
+  margin: var(--gutter-three-quarters) 0;
+}
+
+.PaypalTickets-selectWrap {
+  margin-right: var(--gutter);
+}
+
+.PaypalTickets-label {
+  margin-right: var(--gutter);
+}

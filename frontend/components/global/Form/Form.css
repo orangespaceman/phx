@@ -23,6 +23,10 @@
   width: 100%;
 }
 
+.Form-input--inline {
+  width: auto;
+}
+
 .Form-input--text:focus,
 .Form-textarea:focus {
   border-color: var(--colour-blue-dark);
@@ -50,6 +54,10 @@
   position: relative;
 }
 
+.Form-selectWrap--inline {
+  display: inline-block;
+}
+
 .Form-select {
   border-radius: 0;
   box-sizing: border-box;
@@ -58,6 +66,10 @@
   outline: none;
   padding: 0.6em 0.8em 0.5em 0.8em;
   width: 100%;
+}
+
+.Form-selectWrap--inline .Form-select {
+  width: auto;
 }
 
 .Form-selectWrap::after {

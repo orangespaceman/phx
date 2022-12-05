@@ -1,0 +1,37 @@
+/*
+ * @define PaypalKit
+ */
+
+.PaypalKit-categoryTitle {
+  margin-bottom: var(--gutter-half);
+  margin-top: var(--gutter-double);
+}
+
+.PaypalKit-item--unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.PaypalKit-item {
+  margin: var(--gutter-three-quarters) 0;
+}
+
+.PaypalKit-itemSelectWrap {
+  margin-right: var(--gutter);
+}
+
+.PaypalKit-order {
+  margin-top: var(--gutter-double);
+}
+
+.PaypalKit-orderItemDescription {
+  display: block;
+  font-size: var(--font-size-default);
+  font-weight: bold;
+}
+
+.PaypalKit-orderItemSize {
+  display: block;
+  font-size: var(--font-size-small);
+  font-style: italic;
+}

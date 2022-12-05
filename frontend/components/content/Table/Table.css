@@ -52,7 +52,7 @@
 
 .Table th {
   border-bottom: 2px solid var(--colour-white);
-  padding: var(--gutter-half);
+  padding: var(--gutter);
 }
 
 .Table td {
