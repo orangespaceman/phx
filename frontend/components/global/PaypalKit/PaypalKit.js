@@ -164,8 +164,7 @@ class PaypalKit {
             <tbody class="PaypalKit-orderItems"></tbody>
             <tfoot>
               <tr>
-                <th colspan="3">Total</th>
-                <th class="PaypalKit-orderTotal"></th>
+                <th colspan="4">Total: <span class="PaypalKit-orderTotal"></span></th>
               </tr>
             </tfoot>
           </table>
