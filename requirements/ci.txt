@@ -16,7 +16,7 @@ attrs==22.1.0
     # via
     #   -r test.txt
     #   pytest
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   -r test.txt
     #   requests
@@ -53,10 +53,6 @@ django-nested-admin==4.0.0
     # via -r test.txt
 easy-thumbnails==2.8.3
     # via -r test.txt
-exceptiongroup==1.0.1
-    # via
-    #   -r test.txt
-    #   pytest
 facebook-sdk==3.1.0
     # via -r test.txt
 factory-boy==3.2.1
@@ -141,10 +137,6 @@ sqlparse==0.4.3
     # via
     #   -r test.txt
     #   django
-tomli==2.0.1
-    # via
-    #   -r test.txt
-    #   pytest
 twitter==1.19.6
     # via -r test.txt
 urllib3==1.26.12
