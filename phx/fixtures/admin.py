@@ -11,18 +11,10 @@ class FixtureAdmin(admin.ModelAdmin):
         'event_date',
         'age_groups',
         'location',
-        'has_results',
         'author',
     ]
-    list_select_related = ['fixture']
     ordering = ['-event_date']
     exclude = ['author']
-
-    def has_results(self, obj):
-        return True if obj.fixture else False
-        # return obj.results
-
-    has_results.boolean = True
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'author', None) is None:
