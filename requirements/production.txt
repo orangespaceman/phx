@@ -17,7 +17,7 @@ charset-normalizer==2.1.1
     # via
     #   -r base.txt
     #   requests
-django==4.1.3
+django==4.1.7
     # via
     #   -r base.txt
     #   django-anymail
