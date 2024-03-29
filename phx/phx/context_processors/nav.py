@@ -27,11 +27,11 @@ def nav(request):
         'linkUrl': '/competing/',
         'linkText': 'Competing'
     }, {
-        'linkUrl': reverse('gallery-list'),
-        'linkText': 'Gallery'
-    }, {
         'linkUrl': '/membership/',
         'linkText': 'Membership'
+    }, {
+        'linkUrl': '/kit/',
+        'linkText': 'Kit'
     }, {
         'linkUrl': reverse('contact-index'),
         'linkText': 'Contact',
