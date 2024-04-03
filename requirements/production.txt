@@ -52,7 +52,7 @@ idna==3.4
     # via
     #   -r base.txt
     #   requests
-pillow==9.3.0
+pillow==10.3.0
     # via
     #   -r base.txt
     #   easy-thumbnails

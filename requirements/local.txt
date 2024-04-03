@@ -109,7 +109,7 @@ packaging==21.3
     #   pytest
 pep517==0.13.0
     # via build
-pillow==9.3.0
+pillow==10.3.0
     # via
     #   -r test.txt
     #   easy-thumbnails

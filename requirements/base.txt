@@ -42,7 +42,7 @@ facebook-sdk==3.1.0
     # via -r base.in
 idna==3.4
     # via requests
-pillow==9.3.0
+pillow==10.3.0
     # via easy-thumbnails
 psycopg2-binary==2.9.5
     # via -r base.in
