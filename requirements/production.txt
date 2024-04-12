@@ -48,7 +48,7 @@ facebook-sdk==3.1.0
     # via -r base.txt
 gunicorn==20.1.0
     # via -r production.in
-idna==3.4
+idna==3.7
     # via
     #   -r base.txt
     #   requests

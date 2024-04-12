@@ -61,7 +61,7 @@ faker==15.3.1
     # via factory-boy
 flake8==5.0.4
     # via -r test.in
-idna==3.4
+idna==3.7
     # via
     #   -r base.txt
     #   requests

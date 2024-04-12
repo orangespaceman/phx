@@ -40,7 +40,7 @@ easy-thumbnails==2.8.3
     # via -r base.in
 facebook-sdk==3.1.0
     # via -r base.in
-idna==3.4
+idna==3.7
     # via requests
 pillow==9.3.0
     # via easy-thumbnails

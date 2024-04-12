@@ -86,7 +86,7 @@ flake8==5.0.4
     # via -r test.txt
 identify==2.5.8
     # via pre-commit
-idna==3.4
+idna==3.7
     # via
     #   -r test.txt
     #   requests
