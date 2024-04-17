@@ -46,12 +46,14 @@ easy-thumbnails==2.8.3
     # via -r base.txt
 facebook-sdk==3.1.0
     # via -r base.txt
-gunicorn==20.1.0
+gunicorn==22.0.0
     # via -r production.in
 idna==3.4
     # via
     #   -r base.txt
     #   requests
+packaging==24.0
+    # via gunicorn
 pillow==9.3.0
     # via
     #   -r base.txt
@@ -81,6 +83,3 @@ urllib3==1.26.12
     # via
     #   -r base.txt
     #   requests
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
