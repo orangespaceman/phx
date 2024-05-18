@@ -38,10 +38,14 @@ django-nested-admin==4.0.2
     # via -r base.in
 easy-thumbnails==2.8.5
     # via -r base.in
+et-xmlfile==1.1.0
+    # via openpyxl
 facebook-sdk==3.1.0
     # via -r base.in
 idna==3.7
     # via requests
+openpyxl==3.1.4
+    # via -r base.in
 pillow==10.3.0
     # via easy-thumbnails
 psycopg2-binary==2.9.9

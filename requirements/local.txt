@@ -60,6 +60,10 @@ django-nested-admin==4.0.2
     # via -r test.txt
 easy-thumbnails==2.8.5
     # via -r test.txt
+et-xmlfile==1.1.0
+    # via
+    #   -r test.txt
+    #   openpyxl
 exceptiongroup==1.2.1
     # via
     #   -r test.txt
@@ -102,6 +106,8 @@ mccabe==0.7.0
     #   flake8
 nodeenv==1.9.1
     # via pre-commit
+openpyxl==3.1.4
+    # via -r test.txt
 packaging==24.0
     # via
     #   -r test.txt
