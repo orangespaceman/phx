@@ -22,6 +22,18 @@ cd requirements && pip-sync local.txt
 
 ## Run the app
 
+- Create a new `.env` file from the example provided:
+
+  ```
+  cp .env.local.example .env
+  ```
+
+- Generate a new `SECRET_KEY` and add it to your `.env` file:
+
+  ```
+  python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+  ```
+
 - Move from the root directory to the `phx` directory:
 
   ```
@@ -32,6 +44,12 @@ cd requirements && pip-sync local.txt
 
   ```
   python manage.py migrate
+  ```
+
+- Create a Django admin user:
+
+  ```
+  python manage.py createsuperuser
   ```
 
 - Start server:

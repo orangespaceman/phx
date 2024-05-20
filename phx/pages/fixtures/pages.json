@@ -552,6 +552,54 @@
         }
     },
     {
+        "model": "pages.page",
+        "pk": 50,
+        "fields": {
+            "title": "Home",
+            "parent": 14,
+            "slug": "/home/",
+            "created_date": "2019-03-19T12:35:45.136Z",
+            "modified_date": "2019-03-22T18:24:14.608Z",
+            "author": 1
+        }
+    },
+    {
+        "model": "pages.page",
+        "pk": 51,
+        "fields": {
+            "title": "Our Events",
+            "parent": null,
+            "slug": "/our-events/",
+            "created_date": "2024-05-17T19:52:17.067Z",
+            "modified_date": "2024-05-17T19:52:17.067Z",
+            "author": 1
+        }
+    },
+    {
+        "model": "pages.page",
+        "pk": 52,
+        "fields": {
+            "title": "Competing",
+            "parent": null,
+            "slug": "/competing/",
+            "created_date": "2024-05-17T19:52:17.067Z",
+            "modified_date": "2024-05-17T19:52:17.067Z",
+            "author": 1
+        }
+    },
+    {
+        "model": "pages.page",
+        "pk": 53,
+        "fields": {
+            "title": "Kit",
+            "parent": null,
+            "slug": "/kit/",
+            "created_date": "2024-05-17T19:52:17.067Z",
+            "modified_date": "2024-05-17T19:52:17.067Z",
+            "author": 1
+        }
+    },
+    {
         "model": "pages.component",
         "pk": 1,
         "fields": {
