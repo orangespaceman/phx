@@ -39,6 +39,7 @@ class HeroFactory(CleanModelFactory):
 
     class Meta:
         model = Hero
+        skip_postgeneration_save = True
 
 
 class HeroImageCategoryFactory(CleanModelFactory):
