@@ -1,9 +1,13 @@
+import pytest
 from django.test import TestCase
 from django.urls import reverse
 
 from ..factories import GalleryFactory, ImageFactory
 
 
+# Remove once https://github.com/SmileyChris/easy-thumbnails/pull/626 is done
+@pytest.mark.filterwarnings(
+    "ignore::django.utils.deprecation.RemovedInDjango51Warning")
 class TestGalleryDetailView(TestCase):
 
     def test_url_resolves(self):
