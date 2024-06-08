@@ -4,8 +4,7 @@
  * Copy assets into static folder
  */
 
-import copy from "copy";
-import glob from "glob";
+import cpx from "cpx2";
 import clc from "cli-color";
 import { deleteAsync } from "del";
 
@@ -18,40 +17,23 @@ function start() {
     paths.forEach((path) => {
       console.log(clc.green("Deleted: " + path.replace(cwd, "")));
     });
-    findFiles();
+    copyFiles();
   });
 }
 
-function findFiles() {
-  glob(
-    "**/*+(.html|.json)",
-    {
-      cwd: componentDir,
-      nodir: true,
-    },
-    duplicate
-  );
-}
-
-function duplicate(error, files) {
-  if (!error) {
-    copy(
-      files,
-      `../../${targetDir}`,
-      {
-        cwd: componentDir,
-      },
+function copyFiles() {
+  cpx.copy(
+      `${componentDir}/**/*+(.html|.json)`,
+      `${targetDir}`,
+      {},
       report
-    );
-  } else {
-    throw error;
-  }
+    )
 }
 
 function report(error, files) {
   if (!error) {
-    files.forEach((file) => {
-      console.log(clc.green(`Copied: ${file.relative}`));
+    files.copied.forEach((file) => {
+      console.log(clc.green(`Copied: ${file.output}`));
     });
   } else {
     throw error;
