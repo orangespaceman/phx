@@ -1,9 +1,13 @@
+import pytest
 from django.test import TestCase
 from django.urls import reverse
 
 from ..factories import GalleryFactory, ImageFactory
 
 
+# https://github.com/orangespaceman/phx/issues/55
+@pytest.mark.filterwarnings(
+    "ignore::django.utils.deprecation.RemovedInDjango51Warning")
 class TestGalleryDetailView(TestCase):
 
     def test_url_resolves(self):

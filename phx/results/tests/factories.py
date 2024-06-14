@@ -25,3 +25,4 @@ class ResultFactory(CleanModelFactory):
 
     class Meta:
         model = Result
+        skip_postgeneration_save = True

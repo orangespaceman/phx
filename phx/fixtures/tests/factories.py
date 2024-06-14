@@ -32,3 +32,4 @@ class FixtureFactory(CleanModelFactory):
 
     class Meta:
         model = Fixture
+        skip_postgeneration_save = True
