@@ -121,6 +121,14 @@ class ThumbnailAdmin(nested_admin.NestedStackedInline):
 
 
 class NewsAdmin(nested_admin.NestedModelAdmin):
+
+    class Media:
+        # select2 must be loaded before jquery.init.js (#62)
+        js = [
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js"
+        ]
+
     list_display = ['current_image', 'title', 'created_date', 'author']
     list_display_links = ['current_image', 'title']
     list_select_related = ['author', 'thumbnail']
