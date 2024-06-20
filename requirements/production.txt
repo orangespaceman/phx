@@ -44,6 +44,10 @@ django-nested-admin==4.0.2
     # via -r base.txt
 easy-thumbnails==2.8.5
     # via -r base.txt
+et-xmlfile==1.1.0
+    # via
+    #   -r base.txt
+    #   openpyxl
 facebook-sdk==3.1.0
     # via -r base.txt
 gunicorn==22.0.0
@@ -52,6 +56,8 @@ idna==3.7
     # via
     #   -r base.txt
     #   requests
+openpyxl==3.1.4
+    # via -r base.txt
 packaging==24.0
     # via gunicorn
 pillow==10.3.0

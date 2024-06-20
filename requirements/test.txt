@@ -47,6 +47,10 @@ django-nested-admin==4.0.2
     # via -r base.txt
 easy-thumbnails==2.8.5
     # via -r base.txt
+et-xmlfile==1.1.0
+    # via
+    #   -r base.txt
+    #   openpyxl
 exceptiongroup==1.2.1
     # via pytest
 facebook-sdk==3.1.0
@@ -71,6 +75,8 @@ isort==5.13.2
     # via -r test.in
 mccabe==0.7.0
     # via flake8
+openpyxl==3.1.4
+    # via -r base.txt
 packaging==24.0
     # via pytest
 pillow==10.3.0
