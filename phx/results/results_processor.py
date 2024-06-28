@@ -30,6 +30,8 @@ class ResultsProcessor:
 
         self.results = curr_workbook
 
+        return len(list(sheet.rows)) - 1
+
     def _append_new_rows(self, curr_results, prev_results, sheet):
         for row in curr_results.iter_rows(values_only=True):
             row = self._normalize_row(row)
