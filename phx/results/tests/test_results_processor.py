@@ -91,12 +91,13 @@ class TestProcessResults(TestCase):
             mock.side_effect = [fake_results(15), fake_results(10)]
 
             processor = ResultsProcessor()
-            processor.process(new_file, old_file)
+            num_new_results = processor.process(new_file, old_file)
 
+            assert num_new_results == 5
             assert processor.results is not None
             self.assertEqual(2, len(processor.results.sheetnames))
             self.assertEqual("NEW RESULTS", processor.results.sheetnames[0])
-            self.assertEqual(6,
+            self.assertEqual(num_new_results + 1,
                              len(list(processor.results["NEW RESULTS"].rows)))
 
     def test_process_populates_new_sheet_with_expected_results(self):
