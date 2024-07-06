@@ -10,7 +10,7 @@ asgiref==3.8.1
     #   django
 aspy-refactor-imports==3.0.2
     # via seed-isort-config
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   -r base.txt
     #   requests
