@@ -33,14 +33,8 @@ class ResultsProcessor:
 
     def _append_headers(self, sheet):
         sheet.append([
-            "Name",
-            "Category",
-            "Distance",
-            "Position",
-            "Time",
-            "Date",
-            "Race",
-            "Location",
+            "Name", "Category", "Distance", "Position", "Time", "Date", "Race",
+            "Location", "Overall Position", "Age Position", "Gender Position"
         ])
 
         return sheet
@@ -81,7 +75,7 @@ class ResultsProcessor:
             race,
             location,
             overall_position,
-            _age_position,
+            age_position,
             gender_postion,
             _best,
             _age_grading,
@@ -91,14 +85,9 @@ class ResultsProcessor:
 
         position = gender_postion if gender_postion else overall_position
         return [
-            f"{first_name} {surname}",
-            f"{sex}{age_category}",
-            distance,
-            position,
-            time,
-            date,
-            race,
-            location,
+            f"{first_name} {surname}", f"{sex}{age_category}", distance,
+            position, time, date, race, location, overall_position,
+            age_position, gender_postion
         ]
 
     def save(self, filename):

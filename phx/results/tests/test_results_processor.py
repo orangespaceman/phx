@@ -107,7 +107,7 @@ class TestProcessResults(TestCase):
             prev, curr = (fake_results(10), fake_results(10))
             [
                 first_name, surname, sex, age_category, date, distance, race,
-                location, _, _, position, _, _, _, time
+                location, position, age_pos, gen_pos, _, _, _, time
             ] = new_result = fake_result()
             curr["Results (30 days)"].append(new_result)
 
@@ -121,28 +121,17 @@ class TestProcessResults(TestCase):
             new_results = list(sheet.rows)
             headers = list(cell.value for cell in new_results[0])
             expected_headers = [
-                "Name",
-                "Category",
-                "Distance",
-                "Position",
-                "Time",
-                "Date",
-                "Race",
-                "Location",
+                "Name", "Category", "Distance", "Position", "Time", "Date",
+                "Race", "Location", "Overall Position", "Age Position",
+                "Gender Position"
             ]
 
             self.assertEqual(headers, expected_headers)
 
             result = list(cell.value for cell in new_results[1])
             expected_result = [
-                f"{first_name} {surname}",
-                f"{sex}{age_category}",
-                distance,
-                position,
-                time,
-                date,
-                race,
-                location,
+                f"{first_name} {surname}", f"{sex}{age_category}", distance,
+                gen_pos, time, date, race, location, position, age_pos, gen_pos
             ]
 
             self.assertEqual(result, expected_result)
