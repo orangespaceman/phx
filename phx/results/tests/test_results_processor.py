@@ -105,7 +105,10 @@ class TestProcessResults(TestCase):
 
         with patch("results.results_processor.load_workbook") as mock:
             prev, curr = (fake_results(10), fake_results(10))
-            new_result = fake_result()  # one new result
+            [
+                first_name, surname, sex, age_category, date, distance, race,
+                location, position, age_pos, gen_pos, _, _, _, time
+            ] = new_result = fake_result()
             curr["Results (30 days)"].append(new_result)
 
             mock.side_effect = [curr, prev]
@@ -115,8 +118,23 @@ class TestProcessResults(TestCase):
 
             assert processor.results is not None
             sheet = processor.results["NEW RESULTS"]
-            self.assertEqual(2, len(list(sheet.rows)))
-            self.assertEqual(new_result, list(sheet.values)[1])
+            new_results = list(sheet.rows)
+            headers = list(cell.value for cell in new_results[0])
+            expected_headers = [
+                "Name", "Category", "Distance", "Position", "Time", "Date",
+                "Race", "Location", "Overall Position", "Age Position",
+                "Gender Position"
+            ]
+
+            self.assertEqual(headers, expected_headers)
+
+            result = list(cell.value for cell in new_results[1])
+            expected_result = [
+                f"{first_name} {surname}", f"{sex}{age_category}", distance,
+                gen_pos, time, date, race, location, position, age_pos, gen_pos
+            ]
+
+            self.assertEqual(result, expected_result)
 
     def test_process_ignores_parkruns(self):
         old_file = File.objects.create(file="BrightonPhoenix_2024-05-05.xlsx")
