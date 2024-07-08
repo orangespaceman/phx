@@ -14,7 +14,7 @@ aspy-refactor-imports==3.0.2
     #   seed-isort-config
 build==1.2.1
     # via pip-tools
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   -r test.txt
     #   requests
