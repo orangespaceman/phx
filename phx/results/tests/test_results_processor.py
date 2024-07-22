@@ -1,3 +1,4 @@
+from typing import Optional
 from unittest.mock import patch
 from xmlrpc.client import Boolean
 
@@ -41,17 +42,18 @@ def fake_results(num_results: int, seed: int = 1981) -> Workbook:
     return wb
 
 
-def fake_result(parkrun: Boolean = False) -> tuple:
+def fake_result(parkrun: Boolean = False,
+                event: Optional[tuple[str, str, str]] = None) -> tuple:
     return (
         fake.first_name(),
         fake.last_name(),
         fake.random_element(["M", "F"]),
         fake.random_element(["U13", "SEN", "V35", "V50", "V60"]),
-        fake.date(),
+        event[0] if event else fake.date(),
         "parkrun"
         if parkrun else fake.random_element(["5K", "10K", "HM", "M"]),
-        fake.word(),
-        fake.city(),
+        event[1] if event else fake.word(),
+        event[2] if event else fake.city(),
         fake.random_int(),
         fake.random_int(),
         fake.random_int(),
@@ -96,7 +98,39 @@ class TestProcessResults(TestCase):
             assert processor.results is not None
             self.assertEqual(2, len(processor.results.sheetnames))
             self.assertEqual("NEW RESULTS", processor.results.sheetnames[0])
-            self.assertEqual(6,
+            # 5 new events + 5 new results + 4 spaces between events
+            self.assertEqual(14,
+                             len(list(processor.results["NEW RESULTS"].rows)))
+
+    def test_process_groups_results_from_the_same_event(self):
+        old_file = File.objects.create(file="BrightonPhoenix_2024-05-05.xlsx")
+        new_file = File.objects.create(file="BrightonPhoenix_2024-05-12.xlsx")
+
+        with patch("results.results_processor.load_workbook") as mock:
+            prev = fake_results(10)
+            curr = fake_results(10)
+            new_results = [
+                fake_result(event=("3 July 24", "BMC Regional", "Winchester")),
+                fake_result(event=("3 July 24", "BMC Regional", "Winchester")),
+                fake_result(event=("3 July 24", "BMC Regional", "Winchester")),
+                fake_result(event=("3 July 24", "BMC Regional", "Winchester")),
+                fake_result(event=("3 July 24", "BMC Regional", "Winchester")),
+                fake_result(event=("22 June 24", "BMC Grand Prix", "Crawley")),
+                fake_result(event=("22 June 24", "BMC Grand Prix", "Crawley")),
+            ]
+            for result in new_results:
+                curr["Results (30 days)"].append(result)
+
+            mock.side_effect = [curr, prev]
+
+            processor = ResultsProcessor()
+            processor.process(new_file, old_file)
+
+            assert processor.results is not None
+            self.assertEqual(2, len(processor.results.sheetnames))
+            self.assertEqual("NEW RESULTS", processor.results.sheetnames[0])
+            # 2 new events + 7 new results + 1 space between events
+            self.assertEqual(10,
                              len(list(processor.results["NEW RESULTS"].rows)))
 
     def test_process_populates_new_sheet_with_expected_results(self):
