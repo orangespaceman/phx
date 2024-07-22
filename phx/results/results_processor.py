@@ -40,6 +40,7 @@ class ResultsProcessor:
         return sheet
 
     def _append_new_rows(self, curr_results, prev_results, sheet):
+        last_row_added = None
         for row in curr_results.iter_rows(values_only=True, min_row=2):
             row = self._normalize_row(row)
             if row[5] == "parkrun":
@@ -54,9 +55,19 @@ class ResultsProcessor:
                     break
 
             if not seen:
+                # If the event is new, insert a new section
+                if last_row_added and self._is_new_event(row, last_row_added):
+                    sheet.append([])  # Add a blank row
+                    sheet = self._append_headers(sheet)
+
                 sheet.append(self._format_row(row))
+                last_row_added = row
 
         return sheet
+
+    def _is_new_event(self, curr_row, prev_row):
+        # Check if the event name, location and date are different
+        return (curr_row[4], curr_row[6:7]) != (prev_row[4], prev_row[6:7])
 
     def _normalize_row(self, row):
         # Remove whitespace and convert empty cells to None
