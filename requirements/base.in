@@ -10,3 +10,4 @@ facebook-sdk
 psycopg2-binary
 twitter
 openpyxl
+beautifulsoup4

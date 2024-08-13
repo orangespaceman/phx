@@ -12,6 +12,8 @@ aspy-refactor-imports==3.0.2
     # via
     #   -r test.txt
     #   seed-isort-config
+beautifulsoup4==4.12.3
+    # via -r test.txt
 build==1.2.1
     # via pip-tools
 certifi==2024.6.2
@@ -158,13 +160,19 @@ python-monkey-business==1.0.0
     # via
     #   -r test.txt
     #   django-nested-admin
-pyyaml==6.0.1
-    # via pre-commit
+pyyaml==6.0.2
+    # via
+    #   -r test.txt
+    #   pre-commit
+    #   responses
 requests==2.32.3
     # via
     #   -r test.txt
     #   django-anymail
     #   facebook-sdk
+    #   responses
+responses==0.25.3
+    # via -r test.txt
 seed-isort-config==2.2.0
     # via -r test.txt
 six==1.16.0
@@ -172,6 +180,10 @@ six==1.16.0
     #   -r test.txt
     #   python-dateutil
     #   python-monkey-business
+soupsieve==2.5
+    # via
+    #   -r test.txt
+    #   beautifulsoup4
 sqlparse==0.5.0
     # via
     #   -r test.txt
@@ -195,6 +207,7 @@ urllib3==2.2.2
     #   -r test.txt
     #   django-anymail
     #   requests
+    #   responses
 virtualenv==20.26.2
     # via pre-commit
 wheel==0.43.0
