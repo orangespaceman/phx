@@ -1,9 +1,12 @@
+import logging
 import re
 from string import ascii_lowercase
 
 import requests
 from athletes.models import Athlete
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 
 class AtheleteScraper:
@@ -32,7 +35,7 @@ class AtheleteScraper:
 
     def find_by_surname(self, surname):
         url = AtheleteScraper.ATHLETE_LOOKUP_URL.format(surname=surname)
-        print("Scraping {url}".format(url=url))
+        logger.info("Scraping {url}".format(url=url))
 
         page = requests.get(url)
 
@@ -83,11 +86,11 @@ class AtheleteScraper:
         return match.group(1) if match else None
 
     def save(self):
-        Athlete.objects.bulk_create(self.athletes,
-                                    update_conflicts=True,
-                                    update_fields=[
-                                        "first_name", "last_name",
-                                        "age_category", "gender"
-                                    ],
-                                    unique_fields=["power_of_10_id"])
-        pass
+        created = Athlete.objects.bulk_create(self.athletes,
+                                              update_conflicts=True,
+                                              update_fields=[
+                                                  "first_name", "last_name",
+                                                  "age_category", "gender"
+                                              ],
+                                              unique_fields=["power_of_10_id"])
+        return len(created)

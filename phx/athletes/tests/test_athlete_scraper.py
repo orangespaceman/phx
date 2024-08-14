@@ -80,11 +80,12 @@ class TestAthleteScraper(TestCase):
 
         self.setup_athletes(["Jane Doe", "John Smith"])
         scraper.find_athletes()
-        scraper.save()
+        # Updates two athletes
+        self.assertEqual(2, scraper.save())
 
         results = Athlete.objects.all()
 
-        print(list(map(lambda a: a.power_of_10_id, results)))
+        # Does not create a second Jane Doe
         self.assertEqual(2, results.count())
         self.assertEqual(["Jane", "John"],
                          list(map(lambda a: a.first_name, results)))
