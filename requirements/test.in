@@ -6,3 +6,4 @@ isort
 pytest-django
 seed-isort-config
 yapf
+responses
