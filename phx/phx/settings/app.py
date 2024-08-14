@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'offline.apps.OfflineConfig',
     'athletes.apps.AthletesConfig',
     'events.apps.EventsConfig',
+    'performances.apps.PerformancesConfig',
 ]
 
 MIDDLEWARE = [
