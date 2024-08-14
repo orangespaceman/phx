@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'social.apps.SocialConfig',
     'error.apps.ErrorConfig',
     'offline.apps.OfflineConfig',
+    'athletes.apps.AthletesConfig',
 ]
 
 MIDDLEWARE = [
