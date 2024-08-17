@@ -96,7 +96,7 @@ class PerformancesScraper:
                 continue
 
             # Performance is too old
-            if event.date < since:
+            if performance.date < since:
                 logger.info(f"Performance too old, stopping search {since}")
                 return (performances, events, True)
 
@@ -118,12 +118,11 @@ class PerformancesScraper:
 
         if len(cells) == 12:
             po10_id = self._parse_meeting_id(cells[9])
-            event_date = datetime.strptime(cells[11].text.strip(), "%d %b %y")
+            perf_date = datetime.strptime(cells[11].text.strip(), "%d %b %y")
 
             event = Event(name=cells[10].text.strip(),
                           location=cells[9].text.strip(),
-                          power_of_10_meeting_id=po10_id,
-                          date=event_date.date())
+                          power_of_10_meeting_id=po10_id)
 
             performance = Performance(
                 athlete=athlete,
@@ -133,6 +132,7 @@ class PerformancesScraper:
                 time=cells[1].text.strip(),
                 category=f"{athlete.gender}{athlete.age_category}",
                 round=cells[6].text.strip(),
+                date=perf_date.date(),
                 overall_position=int(cells[5].text.strip()))
 
             return (performance, event)
