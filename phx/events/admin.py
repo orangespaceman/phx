@@ -6,7 +6,7 @@ from .models import Event
 
 
 class EventsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'location', 'date']
+    list_display = ['name', 'location']
     exclude = ['uploaded_by']
 
     def save_model(self, request, obj, form, change):

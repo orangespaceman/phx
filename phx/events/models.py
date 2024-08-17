@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 class Event(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    date = models.DateField()
 
     power_of_10_meeting_id = models.CharField(max_length=20,
                                               unique=True,

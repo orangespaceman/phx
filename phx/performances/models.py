@@ -20,6 +20,7 @@ class Performance(models.Model):
         models.CASCADE,
     )
 
+    date = models.DateField()
     distance = models.CharField(max_length=100)
     time = models.DurationField()
     category = models.CharField(max_length=20)
