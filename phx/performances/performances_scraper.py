@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import requests
 from athletes.models import Athlete
@@ -109,6 +109,18 @@ class PerformancesScraper:
         match = re.search(r'results\.aspx\?meetingid=(\d+)', str(cell))
         return match.group(1) if match else None
 
+    def _parse_time(self, cell):
+        parts = cell.text.strip().split(':')
+
+        if (len(parts) == 3):
+            return timedelta(hours=int(parts[0]),
+                             minutes=int(parts[1]),
+                             seconds=float(parts[2]))
+        elif (len(parts) == 2):
+            return timedelta(minutes=int(parts[0]), seconds=float(parts[1]))
+        else:
+            return timedelta(seconds=float(parts[0]))
+
     def _parse_row(self, row, athlete: Athlete):
         # Skip intermediate header rows
         if "Grey" in row.get('style'):
@@ -129,7 +141,7 @@ class PerformancesScraper:
                 # Placeholder Event, will be replaced before save
                 event=Event(power_of_10_meeting_id=po10_id),
                 distance=cells[0].text.strip(),
-                time=cells[1].text.strip(),
+                time=self._parse_time(cells[1]),
                 category=f"{athlete.gender}{athlete.age_category}",
                 round=cells[6].text.strip(),
                 date=perf_date.date(),
@@ -140,5 +152,26 @@ class PerformancesScraper:
         return (None, None)
 
     def save(self):
-        # TODO: save performances to db
-        pass
+        events = Event.objects.bulk_create(
+            self.events.values(),
+            update_conflicts=True,
+            unique_fields=["power_of_10_meeting_id"],
+            update_fields=["name", "location"])
+
+        events = {event.power_of_10_meeting_id: event for event in events}
+
+        for p in self.performances:
+            p.event = events[p.event.power_of_10_meeting_id]
+
+        performances = Performance.objects.bulk_create(
+            self.performances,
+            update_conflicts=True,
+            unique_fields=["athlete", "event", "distance", "round"],
+            update_fields=[
+                "distance", "time", "round", "overall_position", "date"
+            ])
+
+        inactive_athletes = Athlete.objects.filter(
+            power_of_10_id__in=self.inactive_athletes).update(active=False)
+
+        return len(performances), len(events), inactive_athletes
