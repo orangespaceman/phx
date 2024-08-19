@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import requests
 from athletes.models import Athlete
@@ -19,6 +19,7 @@ class PerformancesScraper:
     def __init__(self, include_parkrun=True):
         self.events = {}
         self.performances = []
+        self.athletes_checked = set[str]()
         self.inactive_athletes = set[str]()
         self.include_parkrun = include_parkrun
 
@@ -38,16 +39,18 @@ class PerformancesScraper:
 
         if not active:
             self.inactive_athletes.add(athlete.power_of_10_id)
+            self.athletes_checked.add(athlete.pk)
             return 0
         else:
             self.events.update(events)
             self.performances.extend(performances)
+            self.athletes_checked.add(athlete.pk)
             return len(performances)
 
     def _scrape_profile(self, athlete: Athlete, since: date):
         url = PerformancesScraper.ATHLETE_PROFILE_URL.format(
             athlete_id=athlete.power_of_10_id)
-        logger.info("Scraping {url}".format(url=url))
+        logger.info("\nScraping {url}".format(url=url))
 
         page = requests.get(url)
 
@@ -177,5 +180,8 @@ class PerformancesScraper:
 
         inactive_athletes = Athlete.objects.filter(
             power_of_10_id__in=self.inactive_athletes).update(active=False)
+
+        Athlete.objects.filter(pk__in=self.athletes_checked).update(
+            last_checked=datetime.now(tz=timezone.utc))
 
         return len(performances), len(events), inactive_athletes

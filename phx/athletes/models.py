@@ -14,6 +14,7 @@ class Athlete(models.Model):
 
     active = models.BooleanField(default=True)
     power_of_10_id = models.CharField(max_length=20, unique=True, null=True)
+    last_checked = models.DateTimeField(null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
