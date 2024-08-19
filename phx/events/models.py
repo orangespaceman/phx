@@ -24,4 +24,4 @@ class Event(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.name} | {self.location} | {self.date}"
+        return f"{self.name} | {self.location}"
