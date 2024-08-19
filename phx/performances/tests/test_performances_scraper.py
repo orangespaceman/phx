@@ -246,7 +246,35 @@ class TestPerformancesScraper(TestCase):
 
     @responses.activate
     def test_ignores_parkruns(self):
-        pass
+        athlete = Athlete(power_of_10_id='1234',
+                          created_date=datetime.datetime(2024, 1, 1))
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [
+                {
+                    "date": "1 May 24",
+                    "meeting_id": '5555',
+                    "distance": "parkrun"
+                },
+                {
+                    "date": "1 Apr 24",
+                    "meeting_id": '6666',
+                    "distance": "5K"
+                },
+            ]
+        }])
+
+        scraper = PerformancesScraper(include_parkrun=False)
+
+        count = scraper.find_performances(athlete, datetime.date(2024, 4, 1))
+
+        self.assertEqual(1, count)
+        self.assertEqual(1, len(scraper.events))
+        self.assertEqual(1, len(scraper.performances))
 
     @responses.activate
     def test_save_stores_new_performances_in_database(self):
