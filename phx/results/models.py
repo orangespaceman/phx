@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
+from events.models import Event
 from fixtures.models import Category
 
 
@@ -15,7 +16,19 @@ class Result(models.Model):
         blank=True,
         help_text='This is displayed above the results',
     )
-    results = RichTextField(config_name='table', )
+    event = models.ForeignKey(
+        Event,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        help_text='Display all of the performances from a particular Event')
+
+    results = RichTextField(
+        config_name='table',
+        blank=True,
+        null=True,
+        help_text='Enter results manually if an Event has not been selected')
+
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(

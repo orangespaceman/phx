@@ -26,6 +26,28 @@
   <p class="Result-results">
     {{result.results|highlight:search|safe}}
   </p>
+  {% if result.event %}
+  <p class="Result-event">
+    <table>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Distance</th>
+          <th>Position</th>
+          <th>Time</th>
+        </tr>
+        {% for performance in result.event.performance_set.all %}
+          <tr>
+            <td>{{performance.athlete.first_name}} {{performance.athlete.last_name}}</td>
+            <td>{{performance.category}}</td>
+            <td>{{performance.distance}}</td>
+            <td>{{performance.overall_position}}</td>
+            <td>{{performance.time}}</td>
+          </tr>
+        {% endfor %}
+    </table>
+  </p>
+  {% endif %}
   <ul class="Result-links">
     {% if result.event_url %}
       <li class="Result-linkItem">
