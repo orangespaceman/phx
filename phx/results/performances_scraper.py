@@ -5,8 +5,7 @@ from datetime import date, datetime, timedelta, timezone
 import requests
 from athletes.models import Athlete
 from bs4 import BeautifulSoup
-from events.models import Event
-from performances.models import Performance
+from results.models import Event, Performance
 
 logger = logging.getLogger(__name__)
 

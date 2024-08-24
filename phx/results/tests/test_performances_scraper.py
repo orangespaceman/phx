@@ -5,8 +5,8 @@ import responses
 from athletes.models import Athlete
 from django.test import TestCase
 from faker import Faker
-from performances.models import Event, Performance
-from performances.performances_scraper import PerformancesScraper
+from results.models import Event, Performance
+from results.performances_scraper import PerformancesScraper
 
 fake = Faker()
 

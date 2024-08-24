@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from athletes.models import Athlete
 from django.db.models import Q
 from django_extensions.management.jobs import DailyJob
-from performances.performances_scraper import PerformancesScraper
+from results.performances_scraper import PerformancesScraper
 
 logger = logging.getLogger(__name__)
 
