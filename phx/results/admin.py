@@ -5,6 +5,17 @@ from phx.admin import phx_admin
 from .models import Event, Performance, Result
 
 
+@admin.action(description="Create Results from selected Events")
+def create_result_from_event(_modeladmin, request, queryset):
+    for event in queryset:
+        Result.objects.create(
+            title=f"{event.name} - {event.location}",
+            event_date=event.date,
+            event=event,
+            author=request.user,
+        )
+
+
 class ResultAdmin(admin.ModelAdmin):
     # display data on results listing view
     list_display = ['title', 'event_date', 'author']
@@ -32,6 +43,7 @@ class ResultAdmin(admin.ModelAdmin):
 class EventsAdmin(admin.ModelAdmin):
     list_display = ['name', 'display_new', 'location', 'date']
     exclude = ['uploaded_by']
+    actions = [create_result_from_event]
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'uploaded_by', None) is None:
