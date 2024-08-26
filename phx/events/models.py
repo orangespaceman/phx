@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timedelta, timezone
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -22,6 +23,24 @@ class Event(models.Model):
         blank=True,
         null=True,
     )
+
+    @property
+    def new(self):
+        """
+        Created in the last 14 days and not associated with a Result
+        """
+        since = datetime.now(tz=timezone.utc) - timedelta(days=14)
+        recent = self.created_date > since
+        return recent and self.__getattribute__('result_set').count() == 0
+
+    @property
+    def date(self):
+        performances = self.__getattribute__('performance_set')
+
+        if performances.count() == 0:
+            return None
+        else:
+            return performances.order_by('date').first().date
 
     def __str__(self) -> str:
         return f"{self.name} | {self.location}"
