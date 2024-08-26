@@ -16,10 +16,11 @@ class PerformancesScraper:
     ATHLETE_PROFILE_URL = "https://www.thepowerof10.info/athletes/" \
                           "profile.aspx?athleteid={athlete_id}&viewby=date"
 
-    def __init__(self):
+    def __init__(self, include_parkrun=True):
         self.events = {}
         self.performances = []
         self.inactive_athletes = set[str]()
+        self.include_parkrun = include_parkrun
 
     def find_performances(self, athlete: Athlete, since: date):
         """
@@ -93,6 +94,9 @@ class PerformancesScraper:
 
             # Irrelevant row
             if not performance or not event:
+                continue
+
+            if not self.include_parkrun and performance.distance == 'parkrun':
                 continue
 
             # Performance is too old
