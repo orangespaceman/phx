@@ -302,6 +302,25 @@ class TestPerformancesScraper(TestCase):
         self.assertEqual(1, len(Event.objects.all()))
 
     @responses.activate
+    def test_save_updates_athlete_last_checked_field(self):
+        athlete = Athlete(power_of_10_id='1234')
+        athlete.save()
+
+        self.setup_profile_page([{
+            "year": 2024,
+            "club": "Brighton Phoenix",
+            "performances": []
+        }])
+
+        scraper = PerformancesScraper()
+        scraper.find_performances(athlete, datetime.date(2024, 1, 1))
+        scraper.save()
+
+        athlete.refresh_from_db()
+
+        self.assertTrue(athlete.last_checked)
+
+    @responses.activate
     def test_save_updates_existing_performances_in_database(self):
         athlete = Athlete(power_of_10_id='1234')
 
