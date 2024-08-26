@@ -2,9 +2,7 @@ from datetime import datetime, timedelta
 
 from athletes.models import Athlete
 from django.test import TestCase
-from events.models import Event
-from performances.models import Performance
-from results.models import Result
+from results.models import Event, Performance, Result
 
 
 class TestEventsModel(TestCase):

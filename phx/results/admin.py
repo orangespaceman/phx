@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from phx.admin import phx_admin
 
-from .models import Result
+from .models import Event, Performance, Result
 
 
 class ResultAdmin(admin.ModelAdmin):
@@ -29,4 +29,34 @@ class ResultAdmin(admin.ModelAdmin):
         obj.save()
 
 
+class EventsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'display_new', 'location', 'date']
+    exclude = ['uploaded_by']
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'uploaded_by', None) is None:
+            obj.uploaded_by = request.user
+        obj.save()
+
+    def display_new(self, obj):
+        if obj.new:
+            return '⭐'
+        else:
+            return '-'
+
+    display_new.short_description = 'New'
+
+
+class PerformancesAdmin(admin.ModelAdmin):
+    list_display = ['athlete', 'event', 'distance', 'time']
+    exclude = ['uploaded_by']
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'uploaded_by', None) is None:
+            obj.uploaded_by = request.user
+        obj.save()
+
+
+phx_admin.register(Performance, PerformancesAdmin)
 phx_admin.register(Result, ResultAdmin)
+phx_admin.register(Event, EventsAdmin)
