@@ -389,7 +389,7 @@ class TestPerformancesScraper(TestCase):
         self.assertFalse(Athlete.objects.all()[0].active)
 
     @responses.activate
-    def test_ignores_results_without_position(self):
+    def test_ignores_invalid_results(self):
         athlete = Athlete(power_of_10_id='1234',
                           created_date=datetime.datetime(2024, 1, 1))
 
@@ -401,13 +401,23 @@ class TestPerformancesScraper(TestCase):
             "performances": [
                 {
                     "date": "1 May 24",
-                    "meeting_id": "1234",
+                    "meeting_id": "1111",
                     "position": "-",
                     "time": "DNF"
                 },
                 {
+                    "date": "2 May 24",
+                    "meeting_id": "2222",
+                    "time": "NT"
+                },
+                {
+                    "date": "3 May 24",
+                    "meeting_id": "3333",
+                    "time": "DQ"
+                },
+                {
                     "date": "1 Apr 24",
-                    "meeting_id": "5678"
+                    "meeting_id": "4444"
                 },
             ]
         }])

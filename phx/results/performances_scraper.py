@@ -160,7 +160,7 @@ class PerformancesScraper:
     def _is_valid_performance(self, cells, athlete: Athlete):
         time = cells[1].text.strip()
         position = cells[5].text.strip()
-        if time in ('DNF', 'DNS') or position == '-':
+        if time in ('DNF', 'DNS', 'NT', 'DQ') or position == '-':
             logger.warning(f"Skipping invalid performance for {athlete}")
             return False
 
