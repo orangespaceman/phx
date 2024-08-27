@@ -388,6 +388,38 @@ class TestPerformancesScraper(TestCase):
 
         self.assertFalse(Athlete.objects.all()[0].active)
 
+    @responses.activate
+    def test_ignores_results_without_position(self):
+        athlete = Athlete(power_of_10_id='1234',
+                          created_date=datetime.datetime(2024, 1, 1))
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [
+                {
+                    "date": "1 May 24",
+                    "meeting_id": "1234",
+                    "position": "-",
+                    "time": "DNF"
+                },
+                {
+                    "date": "1 Apr 24",
+                    "meeting_id": "5678"
+                },
+            ]
+        }])
+
+        scraper = PerformancesScraper()
+
+        count = scraper.find_performances(athlete, datetime.date(2024, 4, 1))
+
+        self.assertEqual(1, count)
+        self.assertEqual(1, len(scraper.events))
+        self.assertEqual(1, len(scraper.performances))
+
     def setup_profile_page(self, performances):
         rows = []
         for group in performances:

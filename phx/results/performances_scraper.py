@@ -134,7 +134,7 @@ class PerformancesScraper:
 
         cells = row.find_all('td')
 
-        if len(cells) == 12:
+        if len(cells) == 12 and self._is_valid_performance(cells, athlete):
             po10_id = self._parse_meeting_id(cells[9])
             perf_date = datetime.strptime(cells[11].text.strip(), "%d %b %y")
 
@@ -156,6 +156,15 @@ class PerformancesScraper:
             return (performance, event)
 
         return (None, None)
+
+    def _is_valid_performance(self, cells, athlete: Athlete):
+        time = cells[1].text.strip()
+        position = cells[5].text.strip()
+        if time in ('DNF', 'DNS') or position == '-':
+            logger.warning(f"Skipping invalid performance for {athlete}")
+            return False
+
+        return True
 
     def save(self):
         events = Event.objects.bulk_create(
