@@ -6,7 +6,10 @@ from .models import Athlete
 
 
 class AthleteAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'gender', 'age_category']
+    list_display = [
+        'first_name', 'last_name', 'gender', 'age_category', 'active',
+        'last_checked'
+    ]
     exclude = ['uploaded_by']
 
     def save_model(self, request, obj, form, change):
