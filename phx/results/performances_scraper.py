@@ -151,7 +151,7 @@ class PerformancesScraper:
                 category=f"{athlete.gender}{athlete.age_category}",
                 round=cells[6].text.strip(),
                 date=perf_date.date(),
-                overall_position=int(cells[5].text.strip()))
+                overall_position=cells[5].text.strip())
 
             return (performance, event)
 
