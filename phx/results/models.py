@@ -100,7 +100,7 @@ class Performance(models.Model):
     time = models.DurationField()
     category = models.CharField(max_length=20)
     round = models.CharField(max_length=20, null=True)
-    overall_position = models.PositiveIntegerField()
+    overall_position = models.CharField(max_length=20)
     age_position = models.PositiveIntegerField(null=True)
     gender_position = models.PositiveIntegerField(null=True)
 

@@ -420,6 +420,30 @@ class TestPerformancesScraper(TestCase):
         self.assertEqual(1, len(scraper.events))
         self.assertEqual(1, len(scraper.performances))
 
+    @responses.activate
+    def test_can_parse_string_positions(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        athlete.created_date = datetime.datetime(2024, 1, 1)
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [{
+                "date": "1 May 24",
+                "meeting_id": "1234",
+                "position": "L3",
+            }]
+        }])
+
+        scraper = PerformancesScraper()
+
+        scraper.find_performances(athlete, datetime.date(2024, 5, 1))
+        self.assertEqual((1, 1, 0), scraper.save())
+
     def setup_profile_page(self, performances):
         rows = []
         for group in performances:
