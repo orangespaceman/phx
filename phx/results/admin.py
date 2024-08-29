@@ -5,11 +5,28 @@ from phx.admin import phx_admin
 from .models import Event, Performance, Result
 
 
+class EventInline(admin.StackedInline):
+    """
+    A readonly InlineModelAdmin used to show related
+    Events from within the Result admin interface
+    """
+
+    model = Event
+    extra = 0
+    can_delete = False
+    fields = ['date']
+    readonly_fields = ['date']
+
+    def has_add_permission(self, request, obj):
+        return False
+
+
 class ResultAdmin(admin.ModelAdmin):
     # display data on results listing view
     list_display = ['title', 'event_date', 'author']
     ordering = ['-created_date']
     search_fields = ['title']
+    inlines = [EventInline]
 
     # order list display view by event date
     def get_queryset(self, request):
@@ -30,21 +47,13 @@ class ResultAdmin(admin.ModelAdmin):
 
 
 class EventsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'display_new', 'location', 'date']
+    list_display = ['name', 'location', 'date']
     exclude = ['uploaded_by']
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'uploaded_by', None) is None:
             obj.uploaded_by = request.user
         obj.save()
-
-    def display_new(self, obj):
-        if obj.new:
-            return '⭐'
-        else:
-            return '-'
-
-    display_new.short_description = 'New'
 
 
 class PerformancesAdmin(admin.ModelAdmin):

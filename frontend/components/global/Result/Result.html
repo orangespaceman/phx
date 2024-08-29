@@ -26,7 +26,7 @@
   <p class="Result-results">
     {{result.results|highlight:search|safe}}
   </p>
-  {% if result.event %}
+  {% for event in result.event_set.all %}
   <p class="Result-event">
     <table>
         <tr>
@@ -36,7 +36,7 @@
           <th>Position</th>
           <th>Time</th>
         </tr>
-        {% for performance in result.event.performance_set.all %}
+        {% for performance in event.performance_set.all %}
           <tr>
             <td>{{performance.athlete.first_name}} {{performance.athlete.last_name}}</td>
             <td>{{performance.category}}</td>
@@ -47,7 +47,7 @@
         {% endfor %}
     </table>
   </p>
-  {% endif %}
+  {% endfor %}
   <ul class="Result-links">
     {% if result.event_url %}
       <li class="Result-linkItem">
