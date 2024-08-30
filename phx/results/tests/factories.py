@@ -13,6 +13,7 @@ class ResultFactory(CleanModelFactory):
     summary = FuzzyText()
     results = FuzzyText()
     results_url = 'http://example.com'
+    draft = False
 
     @post_generation
     def categories(self, create, extracted, **kwargs):

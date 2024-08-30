@@ -23,7 +23,7 @@ class EventInline(admin.StackedInline):
 
 class ResultAdmin(admin.ModelAdmin):
     # display data on results listing view
-    list_display = ['title', 'event_date', 'author']
+    list_display = ['title', 'event_date', 'author', 'published']
     ordering = ['-created_date']
     search_fields = ['title']
     inlines = [EventInline]
@@ -39,6 +39,10 @@ class ResultAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj):
         return []
+
+    @admin.display(boolean=True)
+    def published(self, obj):
+        return not obj.draft
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'author', None) is None:
