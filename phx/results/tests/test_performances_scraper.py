@@ -5,7 +5,7 @@ import responses
 from athletes.models import Athlete
 from django.test import TestCase
 from faker import Faker
-from results.models import Event, Performance
+from results.models import Event, Performance, Result
 from results.performances_scraper import PerformancesScraper
 
 fake = Faker()
@@ -387,6 +387,77 @@ class TestPerformancesScraper(TestCase):
         scraper.save()
 
         self.assertFalse(Athlete.objects.all()[0].active)
+
+    @responses.activate
+    def test_save_creates_draft_result_for_each_event(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        athlete.created_date = datetime.datetime(2024, 1, 1)
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [{
+                "date": "1 May 24",
+                "meeting_id": '5678'
+            }]
+        }])
+
+        scraper = PerformancesScraper()
+        scraper.find_performances(athlete, datetime.date(2024, 1, 1))
+        scraper.save()
+
+        events = Event.objects.all()
+        results = Result.objects.all()
+
+        self.assertEqual(1, len(events))
+        self.assertEqual(1, len(results))
+        self.assertEqual(events[0].result, results[0])
+
+        self.assertTrue(results[0].draft)
+        self.assertEqual(events[0].date, results[0].event_date)
+        self.assertTrue(events[0].name in results[0].title)
+
+    @responses.activate
+    def test_save_doesnt_create_new_result_if_already_exists(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        athlete.created_date = datetime.datetime(2024, 1, 1)
+
+        result = Result.objects.create(title="parkrun - Preston Park",
+                                       event_date=datetime.datetime(
+                                           2024, 5, 1))
+
+        Event.objects.create(name='parkrun',
+                             location='Preston Park',
+                             power_of_10_meeting_id='5678',
+                             result=result)
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [{
+                "date": "1 May 24",
+                "meeting_id": '5678'
+            }]
+        }])
+
+        scraper = PerformancesScraper()
+        scraper.find_performances(athlete, datetime.date(2024, 1, 1))
+        scraper.save()
+
+        events = Event.objects.all()
+        results = Result.objects.all()
+
+        self.assertEqual(1, len(events))
+        self.assertEqual(1, len(results))
+        self.assertEqual(events[0].result, results[0])
 
     @responses.activate
     def test_ignores_invalid_results(self):

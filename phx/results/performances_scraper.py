@@ -5,7 +5,8 @@ from datetime import date, datetime, timedelta, timezone
 import requests
 from athletes.models import Athlete
 from bs4 import BeautifulSoup
-from results.models import Event, Performance
+from django.db import transaction
+from results.models import Event, Performance, Result
 
 logger = logging.getLogger(__name__)
 
@@ -191,5 +192,16 @@ class PerformancesScraper:
 
         Athlete.objects.filter(pk__in=self.athletes_checked).update(
             last_checked=datetime.now(tz=timezone.utc))
+
+        events_without_results = Event.objects.filter(
+            power_of_10_meeting_id__in=events.keys(), result=None)
+
+        with transaction.atomic():
+            for event in events_without_results:
+                event.result = Result.objects.create(
+                    title=f"{event.name} - {event.location}",
+                    event_date=event.date,
+                    draft=True)
+                event.save()
 
         return len(performances), len(events), inactive_athletes
