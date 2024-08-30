@@ -5,6 +5,11 @@ from phx.admin import phx_admin
 from .models import Event, Performance, Result
 
 
+@admin.action(description="Publish selected results")
+def publish_results(_modeladmin, request, queryset):
+    queryset.filter(draft=True).update(draft=False, author=request.user)
+
+
 class EventInline(admin.StackedInline):
     """
     A readonly InlineModelAdmin used to show related
@@ -27,6 +32,7 @@ class ResultAdmin(admin.ModelAdmin):
     ordering = ['-created_date']
     search_fields = ['title']
     inlines = [EventInline]
+    actions = [publish_results]
 
     # order list display view by event date
     def get_queryset(self, request):
