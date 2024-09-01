@@ -41,7 +41,7 @@
     "stylelint": "^16.6.1",
     "stylelint-config-suitcss": "^21.0.0",
     "stylelint-selector-bem-pattern": "^4.0.0",
-    "webpack": "^5.91.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
