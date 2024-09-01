@@ -23,6 +23,8 @@ class Result(models.Model):
         null=True,
         help_text='Enter results manually if no Events have been linked')
 
+    draft = models.BooleanField(default=False)
+
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(

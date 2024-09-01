@@ -49,7 +49,7 @@ class ResultsListView(generic.ListView):
     def get_queryset(self):
         query = Result.objects.prefetch_related(
             'categories', 'event_set__performance_set__athlete').filter(
-                event_date__lte=timezone.now(), )
+                event_date__lte=timezone.now(), draft=False)
 
         search = self.request.GET.get('search')
         if search:

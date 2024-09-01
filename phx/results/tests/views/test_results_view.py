@@ -189,3 +189,20 @@ class TestResultsView(TestCase):
         response = self.client.get(url, {'pageSize': '87'})
         self.assertEqual(len(response.context['result_list']), 10)
         self.assertEqual(response.context['paginate_by'], 10)
+
+    def test_drafts(self):
+        """
+        GET request ignores drafts
+        """
+
+        url = reverse('results-index')
+        Page.objects.create(title='results')
+
+        ResultFactory(title='Published')
+        ResultFactory(title='Draft 1', draft=True)
+        ResultFactory(title='Draft 2', draft=True)
+
+        response = self.client.get(url)
+        results = response.context['results'].all()
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].title, 'Published')
