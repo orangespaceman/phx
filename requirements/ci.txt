@@ -14,7 +14,7 @@ aspy-refactor-imports==3.0.2
     #   seed-isort-config
 beautifulsoup4==4.12.3
     # via -r test.txt
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   -r test.txt
     #   requests
