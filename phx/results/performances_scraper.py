@@ -198,10 +198,18 @@ class PerformancesScraper:
 
         with transaction.atomic():
             for event in events_without_results:
-                event.result = Result.objects.create(
-                    title=f"{event.name} - {event.location}",
-                    event_date=event.date,
-                    draft=True)
-                event.save()
+                if "parkrun" in event.name.lower():
+                    _year, week, _day = event.date.isocalendar()
+                    result, _created = Result.objects.get_or_create(
+                        title=f"parkrun - week {week}", event_date=event.date)
+
+                    event.result = result
+                    event.save()
+                else:
+                    event.result = Result.objects.create(
+                        title=f"{event.name} - {event.location}",
+                        event_date=event.date,
+                        draft=True)
+                    event.save()
 
         return len(performances), len(events), inactive_athletes

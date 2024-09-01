@@ -402,7 +402,9 @@ class TestPerformancesScraper(TestCase):
             "Brighton Phoenix",
             "performances": [{
                 "date": "1 May 24",
-                "meeting_id": '5678'
+                "meeting_id": '5678',
+                "distance": "5K",
+                "meeting": "Brighton 5K"
             }]
         }])
 
@@ -458,6 +460,52 @@ class TestPerformancesScraper(TestCase):
         self.assertEqual(1, len(events))
         self.assertEqual(1, len(results))
         self.assertEqual(events[0].result, results[0])
+
+    @responses.activate
+    def test_save_links_all_parkruns_in_same_week_to_same_result(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        athlete.created_date = datetime.datetime(2024, 1, 1)
+
+        Result.objects.create(title="parkrun - week 32",
+                              event_date=datetime.datetime(2024, 8, 10))
+
+        Result.objects.create(title="parkrun - week 33",
+                              event_date=datetime.datetime(2024, 8, 17))
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [{
+                "date": "10 Aug 24",
+                "meeting_id": '1111',
+                "distance": "parkrun"
+            }, {
+                "date": "17 Aug 24",
+                "meeting_id": '2222',
+                "distance": "parkrun"
+            }, {
+                "date": "24 Aug 24",
+                "meeting_id": '3333',
+                "distance": "parkrun"
+            }]
+        }])
+
+        scraper = PerformancesScraper()
+        scraper.find_performances(athlete, datetime.date(2024, 1, 1))
+        scraper.save()
+
+        events = Event.objects.all()
+        results = Result.objects.all()
+
+        self.assertEqual(3, len(events))
+        self.assertEqual(3, len(results))
+        self.assertEqual(events[0].result, results[0])
+        self.assertEqual(events[1].result, results[1])
+        self.assertEqual(events[2].result, results[2])
 
     @responses.activate
     def test_ignores_invalid_results(self):

@@ -41,7 +41,7 @@ class Job(DailyJob):
         logger.info(f"{len(athletes)} athletes left to check this week")
         logger.info(f"Checking {len(athletes_to_check)} athletes today")
 
-        scraper = PerformancesScraper(include_parkrun=False)
+        scraper = PerformancesScraper(include_parkrun=True)
 
         for athlete in athletes_to_check:
             scraper.find_performances(athlete, since=last_month.date())
