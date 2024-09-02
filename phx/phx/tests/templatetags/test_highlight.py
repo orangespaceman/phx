@@ -41,3 +41,12 @@ class TestTemplateTagsHighlight(TestCase):
         results = highlight(full_text, search_term)
 
         self.assertEqual(results, expected)
+
+    def test_None_text_dont_replace_text(self):
+        """
+        Text is missing, don't attempt replace.
+        """
+
+        results = highlight(None, 'foo bar')
+
+        self.assertEqual(results, None)
