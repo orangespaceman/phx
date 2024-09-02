@@ -23,9 +23,11 @@
       {{result.summary|highlight:search|safe}}
     </div>
   </div>
+  {% if result.results %}
   <p class="Result-results">
     {{result.results|highlight:search|safe}}
   </p>
+  {% endif %}
   {% for event in result.event_set.all %}
     {% if result.event_set.all|length > 1 %}
       <h4 class="Result-eventTitle">{{event.name}}</h4>
