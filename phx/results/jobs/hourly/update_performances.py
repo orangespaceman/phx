@@ -20,6 +20,12 @@ class Job(HourlyJob):
 
     def execute(self):
         now = datetime.now()
+
+        # Don't do anything if it's not Wednesday
+        if now.weekday() != 2:
+            logger.info("Not Wednesday, job not running")
+            return
+
         fraction_to_check = fraction_to_check = self.fraction_to_check(now)
 
         last_month = now - timedelta(days=30)
