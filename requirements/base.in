@@ -5,6 +5,7 @@ django-anymail[mailgun]
 django-ckeditor
 django-environ
 django-nested-admin
+django-import-export
 easy-thumbnails
 facebook-sdk
 psycopg2-binary
