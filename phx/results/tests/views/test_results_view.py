@@ -67,7 +67,7 @@ class TestResultsView(TestCase):
 
         latest_past_result = past_results.last()
 
-        response = self.client.get(url)
+        response = self.client.get(url, {'order': 'date-added'})
         self.assertEqual(len(response.context['results']), 5)
 
         result = response.context['results'].first()
@@ -179,16 +179,16 @@ class TestResultsView(TestCase):
 
         url = reverse('results-index')
         response = self.client.get(url)
-        self.assertEqual(len(response.context['result_list']), 10)
-        self.assertEqual(response.context['paginate_by'], 10)
-
-        response = self.client.get(url, {'pageSize': '50'})
         self.assertEqual(len(response.context['result_list']), 50)
         self.assertEqual(response.context['paginate_by'], 50)
 
-        response = self.client.get(url, {'pageSize': '87'})
+        response = self.client.get(url, {'pageSize': '10'})
         self.assertEqual(len(response.context['result_list']), 10)
         self.assertEqual(response.context['paginate_by'], 10)
+
+        response = self.client.get(url, {'pageSize': '87'})
+        self.assertEqual(len(response.context['result_list']), 50)
+        self.assertEqual(response.context['paginate_by'], 50)
 
     def test_drafts(self):
         """

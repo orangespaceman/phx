@@ -69,10 +69,10 @@ class ResultsListView(generic.ListView):
             query = query.filter(event_date__year=year)
 
         order = self.request.GET.get('order', '')
-        if order and order == 'race-date':
-            query = query.order_by('-event_date').distinct()
-        else:
+        if order and order == 'date-added':
             query = query.order_by('-created_date').distinct()
+        else:
+            query = query.order_by('-event_date').distinct()
 
         return query
 
@@ -86,7 +86,7 @@ class ResultsListView(generic.ListView):
 
     def get_paginate_by(self, queryset):
         pagination_options = [10, 50]
-        self.paginate_by = pagination_options[0]
+        self.paginate_by = pagination_options[1]
         requested_page_size = self.request.GET.get(
             'pageSize',
             self.paginate_by,
