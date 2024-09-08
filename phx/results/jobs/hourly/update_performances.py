@@ -12,18 +12,18 @@ logger = logging.getLogger(__name__)
 
 
 class Job(HourlyJob):
-    help = "Scape the Power of 10 profiles of all Phoenix" \
-           "athletes to find new performances. Runs each" \
-           "hour between 6am and 10pm every Wednesday"
+    help = "Scape the Power of 10 profiles of all Phoenix athletes to " \
+           "find new performances. Runs each hour between 6am and 10pm" \
+           "every Monday and Friday"
 
     MAX_ATHLETES_PER_HOUR = 100
 
     def execute(self):
         now = datetime.now()
 
-        # Don't do anything if it's not Wednesday
-        if now.weekday() != 2:
-            logger.info("Not Wednesday, job not running")
+        # Only scrape on Mondays and Fridays
+        if now.weekday() not in [0, 5]:
+            logger.info("Not today, sorry!")
             return
 
         fraction_to_check = fraction_to_check = self.fraction_to_check(now)
