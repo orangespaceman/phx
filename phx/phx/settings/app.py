@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'ckeditor',
     'admin_ordering',
+    'import_export',
 
     # PHX
     'components.apps.ComponentsConfig',

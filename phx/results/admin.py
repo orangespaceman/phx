@@ -1,4 +1,8 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ExportActionMixin
+from import_export.fields import Field
+from import_export.widgets import DateWidget, Widget
 
 from phx.admin import phx_admin
 
@@ -66,9 +70,60 @@ class EventsAdmin(admin.ModelAdmin):
         obj.save()
 
 
-class PerformancesAdmin(admin.ModelAdmin):
+class GenderWidget(Widget):
+
+    def render(self, value, obj=None):
+        if value == 'W':
+            return 'Female'
+
+        if value == 'M':
+            return 'Male'
+
+        return ''
+
+
+class PerformanceResource(resources.ModelResource):
+    athlete__first_name = Field(attribute='athlete__first_name',
+                                column_name='First Name')
+    athlete__last_name = Field(attribute='athlete__last_name',
+                               column_name='Last Name')
+    distance = Field(attribute='distance', column_name='Event Distance')
+    overall_position = Field(attribute='overall_position',
+                             column_name='Position')
+    athlete__age_category = Field(attribute='athlete__age_category',
+                                  column_name='Age Category')
+    date = Field(attribute='date',
+                 column_name='Event Date',
+                 widget=DateWidget('%d/%m/%Y'))
+    athlete__gender = Field(attribute='athlete__gender',
+                            column_name='Sex',
+                            widget=GenderWidget())
+    age_position = Field(attribute='age_position',
+                         column_name='Age Category Position')
+    gender_position = Field(attribute='gender_position',
+                            column_name='Gender Position')
+    event__name = Field(attribute='event__name', column_name='Event Name')
+
+    class Meta:
+        model = Performance
+        fields = (
+            'athlete__first_name',
+            'athlete__last_name',
+            'distance',
+            'overall_position',
+            'athlete__age_category',
+            'date',
+            'athlete__gender',
+            'age_position',
+            'gender_position',
+            'event__name',
+        )
+
+
+class PerformancesAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['athlete', 'event', 'distance', 'time']
     exclude = ['uploaded_by']
+    resource_classes = [PerformanceResource]
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'uploaded_by', None) is None:

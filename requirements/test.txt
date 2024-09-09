@@ -21,12 +21,17 @@ charset-normalizer==3.3.2
     # via
     #   -r base.txt
     #   requests
+diff-match-patch==20230430
+    # via
+    #   -r base.txt
+    #   django-import-export
 django==5.0.8
     # via
     #   -r base.txt
     #   django-anymail
     #   django-ckeditor
     #   django-extensions
+    #   django-import-export
     #   django-js-asset
     #   easy-thumbnails
     #   factory-djoy
@@ -39,6 +44,8 @@ django-ckeditor==6.7.1
 django-environ==0.11.2
     # via -r base.txt
 django-extensions==3.2.3
+    # via -r base.txt
+django-import-export==4.1.1
     # via -r base.txt
 django-js-asset==2.2.0
     # via
@@ -130,6 +137,10 @@ sqlparse==0.5.0
     # via
     #   -r base.txt
     #   django
+tablib==3.5.0
+    # via
+    #   -r base.txt
+    #   django-import-export
 tomli==2.0.1
     # via
     #   pytest
