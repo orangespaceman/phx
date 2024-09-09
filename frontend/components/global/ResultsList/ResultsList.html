@@ -32,13 +32,13 @@
           <a
             class="ResultsList-filterLink {% if order != '' %}is-inactive{% endif %}"
           href="{% url 'results-index' %}{% if search %}?search={{search}}{% endif %}"
-          >Date added</a>
+          >Race date</a>
         </li>
         <li class="ResultsList-filterItem">
           <a
-            class="ResultsList-filterLink {% if order != 'race-date' %}is-inactive{% endif %}"
-          href="{% url 'results-index' %}?order=race-date{% if search %}&amp;search={{search}}{% endif %}"
-          >Race date</a>
+            class="ResultsList-filterLink {% if order != 'date-added' %}is-inactive{% endif %}"
+          href="{% url 'results-index' %}?order=date-added{% if search %}&amp;search={{search}}{% endif %}"
+          >Date added</a>
         </li>
     </div>
     <div class="ResultsList-filterSearch" >
