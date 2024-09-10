@@ -121,7 +121,7 @@ class PerformanceResource(resources.ModelResource):
 
 
 class PerformancesAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ['athlete', 'event', 'distance', 'time']
+    list_display = ['athlete', 'event', 'date', 'distance', 'time']
     exclude = ['uploaded_by']
     resource_classes = [PerformanceResource]
 
