@@ -22,7 +22,7 @@ class Job(HourlyJob):
         now = datetime.now()
 
         # Only scrape on Mondays and Fridays
-        if now.weekday() not in [0, 5]:
+        if now.weekday() not in [0, 4]:
             logger.info("Not today, sorry!")
             return
 
