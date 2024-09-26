@@ -172,16 +172,15 @@ class TestPerformancesScraper(TestCase):
         athlete = Athlete(power_of_10_id='1234',
                           created_date=datetime.datetime(2024, 5, 1))
 
-        self.setup_profile_page([{
-            "year":
-            2024,
-            "club":
-            "Another Club AC",
-            "performances": [{
-                "date": "1 May 24",
-                "meeting_id": 5678
-            }]
-        }])
+        self.setup_profile_page(
+            [{
+                "year": 2024,
+                "club": "Another Club AC",
+                "performances": [{
+                    "date": "1 May 24",
+                    "meeting_id": 5678
+                }]
+            }], "Another Club AC")
 
         scraper = PerformancesScraper()
 
@@ -189,6 +188,28 @@ class TestPerformancesScraper(TestCase):
 
         self.assertEqual(0, count)
         self.assertListEqual(['1234'], list(scraper.inactive_athletes))
+
+    @responses.activate
+    def test_doesnt_consider_new_athletes_with_no_performances_inactive(self):
+        athlete = Athlete(power_of_10_id='1234',
+                          created_date=datetime.datetime(2024, 5, 1))
+
+        self.setup_profile_page(
+            [{
+                "year": 2024,
+                "club": "Another Club AC",
+                "performances": [{
+                    "date": "1 May 24",
+                    "meeting_id": 5678
+                }]
+            }], "Brighton Phoenix")
+
+        scraper = PerformancesScraper()
+
+        count = scraper.find_performances(athlete, datetime.date(2024, 1, 1))
+
+        self.assertEqual(0, count)
+        self.assertListEqual([], list(scraper.inactive_athletes))
 
     @responses.activate
     def test_can_scrape_multiple_performances_at_same_event(self):
@@ -573,7 +594,9 @@ class TestPerformancesScraper(TestCase):
         scraper.find_performances(athlete, datetime.date(2024, 5, 1))
         self.assertEqual((1, 1, 0), scraper.save())
 
-    def setup_profile_page(self, performances):
+    def setup_profile_page(self,
+                           performances,
+                           current_club="Brighton Phoenix"):
         rows = []
         for group in performances:
             year = group['year']
@@ -628,9 +651,12 @@ class TestPerformancesScraper(TestCase):
                         <td align="right">{meeting_date}</td>
                     </tr>
                     """)
-        path = Path(__file__).with_name('test_body.html')
+        text = Path(__file__).with_name('test_body.html').read_text()
+
+        body = text.replace("{rows}", ''.join(rows)) \
+                   .replace("{current_club}", current_club)
 
         responses.get("https://www.thepowerof10.info/athletes/profile.aspx",
-                      body=path.read_text().replace("{rows}", ''.join(rows)),
+                      body=body,
                       content_type='text/plain',
                       status=200)
