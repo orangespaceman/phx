@@ -106,3 +106,4 @@ class Performance(models.Model):
                 fields=['athlete', 'event', 'distance', 'round'],
                 name='unique_performance')
         ]
+        ordering = ['date', 'distance', 'round', 'time']
