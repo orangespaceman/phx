@@ -30,7 +30,7 @@
   {% endif %}
   {% for event in result.event_set.all %}
     {% if result.event_set.all|length > 1 %}
-      <h4 class="Result-eventTitle">{{event.name}}</h4>
+      <h4 class="Result-eventTitle">{{event.name|highlight:search|safe}}</h4>
     {% endif %}
   <p class="Result-event">
     <table>
@@ -43,7 +43,7 @@
         </tr>
         {% for performance in event.performance_set.all %}
           <tr>
-            <td>{{performance.athlete.first_name}} {{performance.athlete.last_name}}</td>
+            <td>{{performance.athlete.full_name|highlight:search|safe}}</td>
             <td>{{performance.category}}</td>
             <td>{{performance.distance}}</td>
             <td>{{performance.overall_position}}</td>

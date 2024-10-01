@@ -2,7 +2,8 @@ import logging
 from datetime import datetime
 
 from components.models import COMPONENT_TYPES
-from django.db.models import Q
+from django.db.models import Q, Value
+from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -12,7 +13,7 @@ from pages.models import Component, Page
 
 from phx.helpers.subnav import generate_subnav
 
-from .models import Result
+from .models import Athlete, Result
 
 logger = logging.getLogger(__name__)
 
@@ -53,11 +54,19 @@ class ResultsListView(generic.ListView):
 
         search = self.request.GET.get('search')
         if search:
+            athletes = Athlete.objects.annotate(full_name=Concat(
+                'first_name', Value(' '), 'last_name')).filter(
+                    full_name__icontains=search)
+
             query = query.filter(
-                Q(summary__icontains=search) | Q(results__icontains=search)
+                Q(summary__icontains=search)
+                | Q(results__icontains=search)
                 | Q(title__icontains=search)
                 | Q(categories__abbreviation__icontains=search)
-                | Q(categories__title__icontains=search))
+                | Q(categories__title__icontains=search)
+                | Q(event__location__icontains=search)
+                | Q(event__name__icontains=search)
+                | Q(event__performance__athlete__in=athletes))
 
         category = self.request.GET.get('category')
         if category:
