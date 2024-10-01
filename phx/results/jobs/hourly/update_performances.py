@@ -29,11 +29,14 @@ class Job(HourlyJob):
         fraction_to_check = fraction_to_check = self.fraction_to_check(now)
 
         last_month = now - timedelta(days=30)
+        six_months_ago = now - timedelta(days=180)
         midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
-        athletes = Athlete.objects.filter(Q(last_checked__lt=midnight)
-                                          | Q(last_checked__isnull=True),
-                                          active=True)
+        athletes = Athlete.objects.filter(
+            Q(last_checked__lt=six_months_ago, active=False)
+            | Q(last_checked__lt=midnight, active=True)
+            | Q(last_checked__isnull=True))
+
         num_to_check = math.ceil(
             min(self.MAX_ATHLETES_PER_HOUR,
                 len(athletes) * fraction_to_check))
