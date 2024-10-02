@@ -50,3 +50,16 @@ class TestTemplateTagsHighlight(TestCase):
         results = highlight(None, 'foo bar')
 
         self.assertEqual(results, None)
+
+    def test_case_insensitive(self):
+        """
+        Case insensitive search
+        """
+        full_text = 'Lorem ipsum dolor sit amet'
+        search_term = 'LOREM'
+        expected = ('<span class="u-highlight">Lorem</span> ipsum '
+                    'dolor sit amet')
+
+        results = highlight(full_text, search_term)
+
+        self.assertEqual(results, expected)

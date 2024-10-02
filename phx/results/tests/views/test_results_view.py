@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from athletes.tests.factories import AthleteFactory
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -8,7 +9,7 @@ from fixtures.tests.factories import CategoryFactory
 from pages.models import Page
 
 from ...models import Result
-from ..factories import ResultFactory
+from ..factories import EventFactory, PerformanceFactory, ResultFactory
 
 
 class TestResultsView(TestCase):
@@ -139,6 +140,41 @@ class TestResultsView(TestCase):
 
         response = self.client.get(url, {'search': 'cat 3'})
         self.assertEqual(len(response.context['results']), 0)
+
+    def test_result_athlete_search(self):
+        """
+        GET request retrieves results filtered by search
+        """
+        Page.objects.create(title='results')
+        url = reverse('results-index')
+
+        result = ResultFactory(title='parkrun')
+        john = AthleteFactory(first_name='John', last_name='Doe')
+        jane = AthleteFactory(first_name='Jane', last_name='Doe')
+        event = EventFactory(result=result)
+        PerformanceFactory(athlete=john, event=event)
+        PerformanceFactory(athlete=jane, event=event)
+
+        response = self.client.get(url, {'search': 'john doe'})
+        self.assertEqual(len(response.context['results']), 1)
+
+    def test_result_event_name_search(self):
+        """
+        GET request retrieves results filtered by search
+        """
+        Page.objects.create(title='results')
+        url = reverse('results-index')
+
+        result = ResultFactory(title='parkrun')
+        john = AthleteFactory(first_name='John', last_name='Doe')
+        jane = AthleteFactory(first_name='Jane', last_name='Doe')
+        first_event = EventFactory(name='Preston Park', result=result)
+        second_event = EventFactory(name='Hove Prom', result=result)
+        PerformanceFactory(athlete=john, event=first_event)
+        PerformanceFactory(athlete=jane, event=second_event)
+
+        response = self.client.get(url, {'search': 'Preston'})
+        self.assertEqual(len(response.context['results']), 1)
 
     def test_get_year(self):
         """"

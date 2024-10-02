@@ -25,5 +25,9 @@ class Athlete(models.Model):
         null=True,
     )
 
+    @property
+    def full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} ({self.age_category})"
