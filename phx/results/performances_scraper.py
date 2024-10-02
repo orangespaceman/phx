@@ -63,13 +63,17 @@ class PerformancesScraper:
     def _parse_page(self, page, athlete: Athlete, since: date):
         soup = BeautifulSoup(page.content, "html.parser")
 
-        div = soup.select('div[id$=pnlPerformances]')
-        tables = div[0].find_all('table')
+        details = soup.select('div[id$=pnlAthleteDetails]')
+        current_club = self._parse_current_club(details)
+        still_phoenix = "Brighton Phoenix" in current_club
+
+        performances = soup.select('div[id$=pnlPerformances]')
+        tables = performances[0].find_all('table')
 
         rows = self._parse_results_table(tables)
         (performances, events, active) = self._parse_rows(rows, athlete, since)
 
-        return (performances, events, active)
+        return (performances, events, active and still_phoenix)
 
     def _parse_results_table(self, tables):
         if (len(tables) == 4):
@@ -84,13 +88,13 @@ class PerformancesScraper:
         performances = []
         events = {}
 
-        if "Brighton Phoenix" not in rows[0].text:
-            logger.warning(f"{athlete} is no longer a Phoenix athlete")
-            return (performances, events, False)
-
         if str(year) not in rows[0].text and str(year - 1) not in rows[0].text:
             logger.warning(f"{athlete} has no recent performances")
             return (performances, events, False)
+
+        if "Brighton Phoenix" not in rows[0].text:
+            logger.warning(f"{athlete} has no recent Phoenix performances")
+            return (performances, events, True)
 
         for row in rows[1:]:
             (performance, event) = self._parse_row(row, athlete)
@@ -157,6 +161,14 @@ class PerformancesScraper:
             return (performance, event)
 
         return (None, None)
+
+    def _parse_current_club(self, details):
+        if len(details) == 0:
+            logger.warning("No athlete details found, assuming still Phoenix")
+            return 'Brighton Phoenix'
+
+        td = details[0].find('td', string='Club:')
+        return td.find_next('td').text.strip() if td else 'Brighton Phoenix'
 
     def _is_valid_performance(self, cells, athlete: Athlete):
         time = cells[1].text.strip()
