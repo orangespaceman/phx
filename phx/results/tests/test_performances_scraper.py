@@ -208,7 +208,7 @@ class TestPerformancesScraper(TestCase):
 
         count = scraper.find_performances(athlete, datetime.date(2024, 1, 1))
 
-        self.assertEqual(0, count)
+        self.assertEqual(1, count)
         self.assertListEqual([], list(scraper.inactive_athletes))
 
     @responses.activate

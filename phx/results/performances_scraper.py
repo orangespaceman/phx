@@ -92,10 +92,6 @@ class PerformancesScraper:
             logger.warning(f"{athlete} has no recent performances")
             return (performances, events, False)
 
-        if "Brighton Phoenix" not in rows[0].text:
-            logger.warning(f"{athlete} has no recent Phoenix performances")
-            return (performances, events, True)
-
         for row in rows[1:]:
             (performance, event) = self._parse_row(row, athlete)
 
