@@ -37,6 +37,8 @@ class PerformancesScraper:
 
         (performances, events, active) = self._scrape_profile(athlete, since)
 
+        performances = list(PerformancesScraper.remove_conflicts(performances))
+
         if not active:
             self.inactive_athletes.add(athlete.power_of_10_id)
             self.athletes_checked.add(athlete.pk)
@@ -221,3 +223,17 @@ class PerformancesScraper:
                     event.save()
 
         return len(performances), len(events), inactive_athletes
+
+    @staticmethod
+    def remove_conflicts(performances):
+        seen = set()
+        for performance in performances:
+            key = (performance.athlete.power_of_10_id,
+                   performance.event.power_of_10_meeting_id,
+                   performance.distance, performance.round)
+            if key not in seen:
+                seen.add(key)
+                yield performance
+            else:
+                athlete = performance.athlete.power_of_10_id
+                logger.info(f"Ignoring conflicting performance for {athlete}")

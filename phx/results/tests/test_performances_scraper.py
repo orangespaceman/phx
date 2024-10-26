@@ -594,6 +594,44 @@ class TestPerformancesScraper(TestCase):
         scraper.find_performances(athlete, datetime.date(2024, 5, 1))
         self.assertEqual((1, 1, 0), scraper.save())
 
+    @responses.activate
+    def test_ignore_invalid_performances_at_same_event(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        athlete.created_date = datetime.datetime(2024, 1, 1)
+
+        self.setup_profile_page([{
+            "year":
+            2024,
+            "club":
+            "Brighton Phoenix",
+            "performances": [{
+                "date": "1 May 24",
+                "meeting_id": "1234",
+                "position": "9",
+                "distance": "10K",
+                "time": "36:35",
+                "round": ""
+            }, {
+                "date": "1 May 24",
+                "meeting_id": "1234",
+                "position": "107",
+                "distance": "10K",
+                "time": "47:50",
+                "round": ""
+            }]
+        }])
+
+        scraper = PerformancesScraper()
+
+        scraper.find_performances(athlete, datetime.date(2024, 5, 1))
+
+        # There are two performances for the same athlete, event, distance
+        # and round. One of them must be invalid so we arbitrarily ignore
+        # the second.
+        self.assertEqual((1, 1, 0), scraper.save())
+
     def setup_profile_page(self,
                            performances,
                            current_club="Brighton Phoenix"):
