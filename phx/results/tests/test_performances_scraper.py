@@ -632,6 +632,20 @@ class TestPerformancesScraper(TestCase):
         # the second.
         self.assertEqual((1, 1, 0), scraper.save())
 
+    @responses.activate
+    def test_dont_crash_when_profile_missing(self):
+        athlete = Athlete(power_of_10_id='1234')
+
+        athlete.save()
+        scraper = PerformancesScraper()
+
+        responses.get("https://www.thepowerof10.info/athletes/profile.aspx",
+                      body="<html>Profile not found</html>",
+                      content_type='text/plain',
+                      status=200)
+
+        scraper.find_performances(athlete, datetime.date(2024, 5, 1))
+
     def setup_profile_page(self,
                            performances,
                            current_club="Brighton Phoenix"):
