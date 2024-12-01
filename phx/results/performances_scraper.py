@@ -70,6 +70,11 @@ class PerformancesScraper:
         still_phoenix = "Brighton Phoenix" in current_club
 
         performances = soup.select('div[id$=pnlPerformances]')
+        if not performances:
+            power_of_10_id = athlete.power_of_10_id
+            logger.warning(f"Performances section missing ({power_of_10_id})")
+            return ([], {}, True)  # Assume active in case just temporary issue
+
         tables = performances[0].find_all('table')
 
         rows = self._parse_results_table(tables)
