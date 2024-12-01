@@ -202,6 +202,21 @@ class TestHomeView(TestCase):
         self.assertEqual(response.context['results'][0],
                          Result.objects.first())
 
+    def test_draft_results(self):
+        """
+        Test draft results are not returned
+        """
+
+        url = reverse('home-index')
+        Page.objects.create(title='home')
+        ContentFactory()
+
+        ResultFactory(draft=True)
+
+        response = self.client.get(url)
+
+        self.assertEqual(len(response.context['results']), 0)
+
     def test_news(self):
         """
         Test latest news are returned
