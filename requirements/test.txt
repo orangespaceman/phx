@@ -25,7 +25,7 @@ diff-match-patch==20230430
     # via
     #   -r base.txt
     #   django-import-export
-django==5.0.9
+django==5.0.10
     # via
     #   -r base.txt
     #   django-anymail
