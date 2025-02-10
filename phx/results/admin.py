@@ -103,6 +103,7 @@ class PerformanceResource(resources.ModelResource):
     gender_position = Field(attribute='gender_position',
                             column_name='Gender Position')
     event__name = Field(attribute='event__name', column_name='Event Name')
+    time = Field(attribute='time', column_name='Time')
 
     class Meta:
         model = Performance
@@ -117,6 +118,7 @@ class PerformanceResource(resources.ModelResource):
             'age_position',
             'gender_position',
             'event__name',
+            'time',
         )
 
 
