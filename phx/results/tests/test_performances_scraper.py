@@ -426,6 +426,11 @@ class TestPerformancesScraper(TestCase):
                 "meeting_id": '5678',
                 "distance": "5K",
                 "meeting": "Brighton 5K"
+            }, {
+                "date": "2 May 24",
+                "meeting_id": '9999',
+                "distance": "parkrun",
+                "meeting": "Preston Park parkrun"
             }]
         }])
 
@@ -436,13 +441,17 @@ class TestPerformancesScraper(TestCase):
         events = Event.objects.all()
         results = Result.objects.all()
 
-        self.assertEqual(1, len(events))
-        self.assertEqual(1, len(results))
+        self.assertEqual(2, len(events))
+        self.assertEqual(2, len(results))
         self.assertEqual(events[0].result, results[0])
 
         self.assertTrue(results[0].draft)
         self.assertEqual(events[0].date, results[0].event_date)
         self.assertTrue(events[0].name in results[0].title)
+
+        self.assertTrue(results[1].draft)
+        self.assertEqual(events[1].date, results[1].event_date)
+        self.assertEqual("parkrun - week 18", results[1].title)
 
     @responses.activate
     def test_save_doesnt_create_new_result_if_already_exists(self):
@@ -645,6 +654,42 @@ class TestPerformancesScraper(TestCase):
                       status=200)
 
         scraper.find_performances(athlete, datetime.date(2024, 5, 1))
+
+    def test_publishes_results_for_events_created_today(self):
+        result = Result.objects.create(title="parkrun - Preston Park",
+                                       event_date=datetime.datetime.now(),
+                                       draft=True)
+
+        Event.objects.create(name='parkrun',
+                             location='Preston Park',
+                             power_of_10_meeting_id='5678',
+                             result=result)
+
+        self.assertEqual(1, PerformancesScraper().publish_results())
+
+        result.refresh_from_db()
+
+        self.assertFalse(result.draft)
+
+    def test_doesnt_publish_results_for_events_not_created_today(self):
+        past = datetime.datetime(2024, 5, 1, tzinfo=datetime.timezone.utc)
+        result = Result.objects.create(title="parkrun - Preston Park",
+                                       event_date=past,
+                                       draft=True)
+
+        event = Event.objects.create(name='parkrun',
+                                     location='Preston Park',
+                                     power_of_10_meeting_id='5678',
+                                     result=result)
+
+        event.created_date = past
+        event.save()
+
+        self.assertEqual(0, PerformancesScraper().publish_results())
+
+        result.refresh_from_db()
+
+        self.assertTrue(result.draft)
 
     def setup_profile_page(self,
                            performances,
