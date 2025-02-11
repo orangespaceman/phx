@@ -216,7 +216,9 @@ class PerformancesScraper:
                 if "parkrun" in event.name.lower():
                     _year, week, _day = event.date.isocalendar()
                     result, _created = Result.objects.get_or_create(
-                        title=f"parkrun - week {week}", event_date=event.date)
+                        title=f"parkrun - week {week}",
+                        event_date=event.date,
+                        defaults={"draft": True})
 
                     event.result = result
                     event.save()

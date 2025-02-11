@@ -426,6 +426,11 @@ class TestPerformancesScraper(TestCase):
                 "meeting_id": '5678',
                 "distance": "5K",
                 "meeting": "Brighton 5K"
+            }, {
+                "date": "2 May 24",
+                "meeting_id": '9999',
+                "distance": "parkrun",
+                "meeting": "Preston Park parkrun"
             }]
         }])
 
@@ -436,13 +441,17 @@ class TestPerformancesScraper(TestCase):
         events = Event.objects.all()
         results = Result.objects.all()
 
-        self.assertEqual(1, len(events))
-        self.assertEqual(1, len(results))
+        self.assertEqual(2, len(events))
+        self.assertEqual(2, len(results))
         self.assertEqual(events[0].result, results[0])
 
         self.assertTrue(results[0].draft)
         self.assertEqual(events[0].date, results[0].event_date)
         self.assertTrue(events[0].name in results[0].title)
+
+        self.assertTrue(results[1].draft)
+        self.assertEqual(events[1].date, results[1].event_date)
+        self.assertEqual("parkrun - week 18", results[1].title)
 
     @responses.activate
     def test_save_doesnt_create_new_result_if_already_exists(self):
