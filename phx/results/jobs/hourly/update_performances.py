@@ -33,9 +33,7 @@ class Job(HourlyJob):
         midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
         athletes = Athlete.objects.filter(
-            Q(last_checked__lt=six_months_ago, active=False)
-            | Q(last_checked__lt=midnight, active=True)
-            | Q(last_checked__isnull=True))
+            self.athletes_query(six_months_ago, midnight))
 
         num_to_check = math.ceil(
             min(self.MAX_ATHLETES_PER_HOUR,
@@ -53,10 +51,23 @@ class Job(HourlyJob):
 
         performances, events, inactives = scraper.save()
 
+        remaining = Athlete.objects.filter(
+            self.athletes_query(six_months_ago, midnight)).count()
+
+        if remaining == 0:
+            logger.info("All athletes checked for today, publishing results")
+            scraper.publish_results()
+
         logger.info(f"{inactives} inactive athletes found")
         logger.info(f"{performances} performances updated")
         logger.info(f"{events} events updated")
         logger.info("Job complete")
+
+    @staticmethod
+    def athletes_query(six_months_ago: datetime, midnight: datetime) -> Q:
+        return Q(last_checked__lt=six_months_ago, active=False) | \
+               Q(last_checked__lt=midnight, active=True) | \
+               Q(last_checked__isnull=True)
 
     @staticmethod
     def fraction_to_check(time: datetime) -> float:

@@ -646,6 +646,42 @@ class TestPerformancesScraper(TestCase):
 
         scraper.find_performances(athlete, datetime.date(2024, 5, 1))
 
+    def test_publishes_results_for_events_created_today(self):
+        result = Result.objects.create(title="parkrun - Preston Park",
+                                       event_date=datetime.datetime.now(),
+                                       draft=True)
+
+        Event.objects.create(name='parkrun',
+                             location='Preston Park',
+                             power_of_10_meeting_id='5678',
+                             result=result)
+
+        self.assertEqual(1, PerformancesScraper().publish_results())
+
+        result.refresh_from_db()
+
+        self.assertFalse(result.draft)
+
+    def test_doesnt_publish_results_for_events_not_created_today(self):
+        past = datetime.datetime(2024, 5, 1, tzinfo=datetime.timezone.utc)
+        result = Result.objects.create(title="parkrun - Preston Park",
+                                       event_date=past,
+                                       draft=True)
+
+        event = Event.objects.create(name='parkrun',
+                                     location='Preston Park',
+                                     power_of_10_meeting_id='5678',
+                                     result=result)
+
+        event.created_date = past
+        event.save()
+
+        self.assertEqual(0, PerformancesScraper().publish_results())
+
+        result.refresh_from_db()
+
+        self.assertTrue(result.draft)
+
     def setup_profile_page(self,
                            performances,
                            current_club="Brighton Phoenix"):
