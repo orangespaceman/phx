@@ -219,7 +219,7 @@ urllib3==2.2.2
     #   django-anymail
     #   requests
     #   responses
-virtualenv==20.26.2
+virtualenv==20.26.6
     # via pre-commit
 wheel==0.43.0
     # via pip-tools
