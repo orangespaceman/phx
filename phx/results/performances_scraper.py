@@ -216,7 +216,9 @@ class PerformancesScraper:
                 if "parkrun" in event.name.lower():
                     _year, week, _day = event.date.isocalendar()
                     result, _created = Result.objects.get_or_create(
-                        title=f"parkrun - week {week}", event_date=event.date)
+                        title=f"parkrun - week {week}",
+                        event_date=event.date,
+                        defaults={"draft": True})
 
                     event.result = result
                     event.save()
@@ -228,6 +230,26 @@ class PerformancesScraper:
                     event.save()
 
         return len(performances), len(events), inactive_athletes
+
+    def publish_results(self):
+        today = datetime.now(tz=timezone.utc).replace(hour=0,
+                                                      minute=0,
+                                                      second=0,
+                                                      microsecond=0)
+
+        # Find all Events that were created today and are
+        # associated with a draft Result
+        events = Event.objects.filter(result__draft=True,
+                                      created_date__gt=today,
+                                      result__created_date__gt=today)
+
+        # Publish the Results of all Events created today
+        for event in events:
+            if event.result:
+                event.result.draft = False
+                event.result.save()
+
+        return len(events)
 
     @staticmethod
     def remove_conflicts(performances):
